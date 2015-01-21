@@ -23,7 +23,9 @@ ini.example=system.file("demo.ini", package="Rpeak")
 iniParse(ini.example)
 }
 \author{
-Gabor Grothendieck <ggrothendieck at gmail.com>, Chris Reudenbach
+Gabor Grothendieck <ggrothendieck at gmail.com>,
+\cr
+\emph{Maintainer:} Chris Reudenbach \email{giswerk@gis-ma.org}
 }
 \references{
 \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}

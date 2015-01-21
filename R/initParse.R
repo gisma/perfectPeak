@@ -3,7 +3,10 @@
 #'@description  Any Windows type ini file will be parsed so that the sections and the variables may be used within R for all kind of settings.
 #'
 #'@usage iniParse(fname)
-#'@author Gabor Grothendieck <ggrothendieck at gmail.com>, Chris Reudenbach 
+#'@author Gabor Grothendieck <ggrothendieck at gmail.com>,  
+#' \cr
+#' \emph{Maintainer:} Chris Reudenbach \email{giswerk@@gis-ma.org}
+#'
 #'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
 #'            \url{https://stat.ethz.ch/pipermail/r-help/2007-June/134115.html}
 #' 

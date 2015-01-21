@@ -2,7 +2,7 @@
 
 export(Rpeak)
 export(calculateDominance)
-export(calculateEValue)
+export(calculateIndependence)
 export(calculateProminence)
 export(costMergePeaks)
 export(distMergePeaks)

@@ -2,39 +2,35 @@
 % Please edit documentation in R/Rpeak.R
 \name{Rpeak}
 \alias{Rpeak}
-\title{Wrapper function that organises all necessary processing steps for calculating the perfect peak  parameters and generating the output}
-\source{
-\tabular{ll}{
-Package: \tab Rpeak\cr
-Type: \tab Package\cr
-Version: \tab 0.2\cr
-License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-}
-}
+\title{Example script that can be used as a wrapper function to start the
+perfect peak analysis}
 \usage{
 Rpeak(ini.file)
 }
 \arguments{
-\item{fname}{file storing the setup parameters as ini file}
+\item{fname}{character file storing the setup parameters as ini file}
 
 \item{DEMfname}{Digtial Elevation Model has to be a GDAL raster file}
 }
 \value{
-Rpeak returns the complete list of all parameters and results and generates some output (maps and tables)
+Rpeak returns the complete list as a dataframe of all parameters and results and
+generates some output (maps and tables)
 }
 \description{
-Preprocessing and controlling of the calculations of dominance, prominence, Eigensteandigkeit value for a given DEM
-Sources:    Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112
-            http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html#             (Zugriff: 20.05.2012)
-            Leonhard, W. (2012): Eigenständigkeit von Gipfeln. -
+Organises all necessary processing steps for calculating the
+perfect peak  parameters and generating the output. It  performs preprocessing
+and controls the calculations of dominance, prominence, independence (E) value
+for a given georeferencend Digital Elevation Model (DEM)\cr
+\cr
+You can use the function as it is or alternatively use it as skeleton control
+script that you cab adapt to your needs.
 }
 \examples{
 #### Example to Rpeak
 
-Rpeak provides an example script that calculates the prominence, dominance and independence value according to the paramaters that are set up in the ini file.
-It needs a DEM as obligatory input, Additionally it can use the OSM peak data base and/or  Harrys Bergliste for naming and selcecting of the peaks.
-For more comprehensive information look at: http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description
+# It needs a georeferenced DEM as obligatory input. All parameters are read from
+# the demo.ini file. You will find some comments in the file.
+
 
 ini.example=system.file("demo.ini", package="Rpeak")
 dem.example=system.file("test.asc", package="Rpeak")
@@ -45,5 +41,14 @@ Chris Reudenbach
 }
 \references{
 \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+}
+\seealso{
+Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.\cr
+\url http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html\cr
+Leonhard, W. (2012): Eigenständigkeit von Gipfeln. -
+
+\code{\link{initEnvironGIS}}, \code{\link{calculateDominance}},
+\code{\link{calculateProminence}},\code{\link{calculateEValue}},
+\code{\link{makePeak}},
 }
 

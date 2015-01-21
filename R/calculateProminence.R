@@ -8,6 +8,7 @@
 #'             Leonhard, W. (2012): Eigenständigkeit von Gipfeln. - 
 #'
 #'@usage calculateProminence(x.coord, y.coord, altitude)
+#'
 #'@author Chris Reudenbach 
 #'
 #'@details 

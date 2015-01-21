@@ -35,8 +35,7 @@
 
 initEnvironGIS <- function(fname,DEMfname){
   
-  # get environment
-  iniparam<-iniParse(fname)
+
   
   # (R) if necessary install libs 
   if (!require(RSAGA)){install.packages('RSAGA')}
@@ -62,20 +61,12 @@ initEnvironGIS <- function(fname,DEMfname){
   library(sp)
   library(gdistance) 
   
-  
+  # get environment
+  ini<-iniParse(fname)  
   # (R) define working folder 
-  root.dir <- trim(iniparam$Pathes$workhome)               # project folder 
-  working.dir <- trim(iniparam$Pathes$runtimedata)         # working folder 
-  
-  # (R) set filenames 
-  peak.list<-trim(iniparam$Files$peaklist)                 # output file name of peaklist
-  
-  # (R) set runtime arguments
-  ext.peak<-trim(iniparam$Params$externalpeaks)            # harry= Harrys Peaklist osm= OSM peak data
-  kernel.size<-trim(iniparam$Params$filterkernelsize)      # size of filter for mode=1; range 3-30; default=5 
-  make.peak.mode<-trim(iniparam$Params$makepeakmode)       #  mode:1=minmax,2=wood&Co.
-  exact.enough<-trim(iniparam$Params$exactenough)          # vertical exactness of flooding in meter
-  
+  root.dir <- trim(ini$Pathes$workhome)               # project folder 
+  working.dir <- trim(ini$Pathes$runtimedata)         # working folder 
+ 
   ### set up of the correct projection information
   # To derive the correct proj.4 string for Austria MGI (EPSG:31254) is very NOT straightforward
   # due to the fact that the datum transformation from WGS84 to Bessel has to meet the data 
@@ -99,7 +90,7 @@ initEnvironGIS <- function(fname,DEMfname){
   # https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006058.html 
   
   # we take the projection of the data as provided by the meta data  
-  epsg.code<-trim(iniparam$Projection$targetepsg)
+  epsg.code<-trim(ini$Projection$targetepsg)
   
   ### section is obsolete just FYI
   ## this option will generate the same basic string but WITH the bessel.molodensky.towgs84 parameter set
@@ -115,7 +106,7 @@ initEnvironGIS <- function(fname,DEMfname){
   ### section is obsolete just FYI
   
   # we take the corrrect string from the ini file
-  target.proj4<-trim(iniparam$Projection$targetproj4)
+  target.proj4<-trim(ini$Projection$targetproj4)
   
   # we will also need the  basic latlon wgs84 proj4 string
   latlon.proj4<-as.character(CRS("+init=epsg:4326")) 
@@ -136,13 +127,13 @@ initEnvironGIS <- function(fname,DEMfname){
   
   # (R) set pathes  of SAGA/GRASS modules and binaries depending on OS
   if(Sys.info()["sysname"] == "Windows"){
-    os.saga.path<-trim(iniparam$Pathes$wossaga)
-    saga.modules<-trim(iniparam$Pathes$wsagamodules)
-    grass.gis.base<-trim(iniparam$Pathes$wgrassgisbase)
+    os.saga.path<-trim(ini$SysPath$wossaga)
+    saga.modules<-trim(ini$SysPath$wsagamodules)
+    grass.gis.base<-trim(ini$SysPath$wgrassgisbase)
   }else if (Sys.info()["sysname"] == "Linux"){
-    os.saga.path<-trim(iniparam$Pathes$lossaga)
-    saga.modules<-trim(iniparam$Pathes$lsagamodules)
-    grass.gis.base<-trim(iniparam$Pathes$lgrassgisbase)
+    os.saga.path<-trim(ini$SysPath$lossaga)
+    saga.modules<-trim(ini$SysPath$lsagamodules)
+    grass.gis.base<-trim(ini$SysPath$lgrassgisbase)
   }
   if (!file.exists(file.path(root.dir, working.dir))){
     dir.create(file.path(root.dir, 'run'),recursive = TRUE)
@@ -177,8 +168,10 @@ initEnvironGIS <- function(fname,DEMfname){
 
   execGRASS('g.region',rast="rastgrass")
   execGRASS('g.proj', flags=c('c') ,  epsg=grass.epsg.code)
+
+  # provide myenv and parameterlist for common use
   result=list(iniparam,myenv)
-  names(result)=c('iniparam','myenv')
+  names(result)=c('ini','myenv')
 return (result)  
 }
 
