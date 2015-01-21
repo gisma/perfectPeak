@@ -5,13 +5,12 @@
 #'@description Organises all necessary processing steps for calculating the 
 #'perfect peak  parameters and generating the output. It  performs preprocessing 
 #'and controls the calculations of dominance, prominence, independence (E) value 
-#'for a given georeferencend Digital Elevation Model (DEM)\cr
-#'\cr
+#'for a given georeferencend Digital Elevation Model (DEM)
+#'
 #'You can use the function as it is or alternatively use it as skeleton control
 #' script that you cab adapt to your needs.
 #'
-#'@seealso Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.\cr
-#'\url http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html\cr
+#'@seealso Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.
 #'Leonhard, W. (2012): Eigenständigkeit von Gipfeln. - 
 #'
 #'
@@ -19,6 +18,7 @@
 #'@author Chris Reudenbach 
 #'
 #'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+#'
 #' 
 #'@param fname character file storing the setup parameters as ini file
 #'@param DEMfname Digtial Elevation Model has to be a GDAL raster file

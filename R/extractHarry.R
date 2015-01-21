@@ -1,14 +1,6 @@
 #'@title Extract peak position and altitude from Harry's Bergliste
 #'@description  The current Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest 
 
-#'@details 
-#'\tabular{ll}{
-#'Package: \tab Rpeak\cr
-#'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'License: \tab GPL (>= 2)\cr
-#'LazyLoad: \tab yes\cr
-#'}
 
 #'@name extractHarry
 #'@aliases extractHarry

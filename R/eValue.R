@@ -32,7 +32,7 @@
 #'       
 #' calculateIndependence()
 
-calculateEValue <- function(peaklist){
+calculateIndependence <- function(peaklist){
   alt<-peaklist[3]
   dom<-peaklist[4]
   prom<-peaklist[5]
