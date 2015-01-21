@@ -27,8 +27,8 @@
 #' generates some output (maps and tables)
 #'
 #' @seealso
-#' \code{\link{initEnvironGIS}}, \code{\link{calculateDominance}},
-#' \code{\link{calculateProminence}},\code{\link{calculateEValue}},
+#' \code{\link{initEnvironGIS}}, \code{\link{calculateDominance}}, 
+#' \code{\link{calculateProminence}}, \code{\link{calculateEValue}}, 
 #' \code{\link{makePeak}},
 #'
 #'@export Rpeak
@@ -42,14 +42,14 @@
 #' ini.example=system.file("demo.ini", package="Rpeak")
 #' dem.example=system.file("test.asc", package="Rpeak")
 #' Rpeak(ini.example,dem.example)
-
-
+#' 
+#' 
 
 Rpeak <-function(fname,DEMfname){
 # rename environ and runtime vars
-ini<-initEnvironGIS(fname,DEMfname)
-ini<-ini$ini
-myenv<-ini$myenv
+i<-initEnvironGIS(fname,DEMfname)
+ini<-i$ini
+myenv<-i$myenv
 
 ### assign varnames to runtime varnames 
 
@@ -72,7 +72,7 @@ target.proj4<-  trim(ini$Projection$targetproj4)            # corrrect string fr
 latlon.proj4<-  as.character(CRS("+init=epsg:4326"))        # basic latlon wgs84 proj4 string
 
 # preprocessing of all data 
-final.peak.list<-makePeak(fname,DEMfname,iniparam=iniparam,myenv=myenv)
+final.peak.list<-makePeak(fname=fname,DEMfname=dem.in,iniparam=ini,myenv=myenv)
 
 ### (R) final analysis and calculatuin of dominance, prominence, and independence
 

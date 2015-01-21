@@ -17,15 +17,6 @@ initEnvironGIS initializes the usage of the GIS packages and other utilities
 \description{
 Function that initializes environment pathes, SAGA, GRASS and GDAL support (and the bindings to the corresponding R packages and the R packages *NOTE* you probably have to customize some settings ini file
 }
-\details{
-\tabular{ll}{
-Package: \tab Rpeak\cr
-Type: \tab Package\cr
-Version: \tab 0.2\cr
-License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-}
-}
 \examples{
 #### Example to initialize the enviroment and GIS bindings for use with R
 #### uses the ini list from an ini file

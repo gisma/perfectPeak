@@ -2,7 +2,15 @@
 % Please edit documentation in R/makePeak.R
 \name{makePeak}
 \alias{makePeak}
-\title{Wrapper function that generates a list of peaks based on external point data and/or a Digital Elevation Model (DEM)}
+\title{Wrapper function that perform some morphometric Digital Elevation Model
+(DEM) analysis to generate a set of reliable peaks. Additionally external point
+data from several sources can be used to name these unknown peaks.
+Currently two different approaches are available. First a simple approach using a filtered
+DEM that is then analysed for local maxima (SAGA's minmax module) is used. Second a more
+sophisticaded approach that classify the landforms of a DEM is utilized and with a first
+estimation of prominence and dominance analysis fileterd. If you choose this approach
+names of external data like Hattys Bergliste or the OSM data are merged to the generic
+DEM peaks. For further interest look in the reference section.}
 \usage{
 makePeak(dem.in, peak.list,make.peak.mode,epsg,target.proj4,kernel.size=5,int=TRUE)
 }
@@ -37,16 +45,15 @@ EValue \tab name of the peak\cr
 }
 }
 \description{
-Wrapper function that generates a list of peaks based on external point data and/or a Digital Elevation Model (DEM)
-}
-\details{
-\tabular{ll}{
-Package: \tab Rpeak\cr
-Type: \tab Package\cr
-Version: \tab 0.2\cr
-License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-}
+Wrapper function that perform some morphometric Digital Elevation Model
+(DEM) analysis to generate a set of reliable peaks. Additionally external point
+data from several sources can be used to name these unknown peaks.
+Currently two different approaches are available. First a simple approach using a filtered
+DEM that is then analysed for local maxima (SAGA's minmax module) is used. Second a more
+sophisticaded approach that classify the landforms of a DEM is utilized and with a first
+estimation of prominence and dominance analysis fileterd. If you choose this approach
+names of external data like Hattys Bergliste or the OSM data are merged to the generic
+DEM peaks. For further interest look in the reference section.
 }
 \examples{
 #### Example to makePeaks in a specified ROI and

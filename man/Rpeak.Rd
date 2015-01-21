@@ -47,7 +47,7 @@ Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.
 Leonhard, W. (2012): Eigenständigkeit von Gipfeln. -
 
 \code{\link{initEnvironGIS}}, \code{\link{calculateDominance}},
-\code{\link{calculateProminence}},\code{\link{calculateEValue}},
+\code{\link{calculateProminence}}, \code{\link{calculateEValue}},
 \code{\link{makePeak}},
 }
 

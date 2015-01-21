@@ -11,14 +11,6 @@
 #'
 #'@author Chris Reudenbach 
 #'
-#'@details 
-#'\tabular{ll}{
-#'Package: \tab Rpeak\cr
-#'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'License: \tab GPL (>= 2)\cr
-#'LazyLoad: \tab yes\cr
-#'}
 #'
 #'@return initEnvironGIS initializes the usage of the GIS packages and other utilities
 #'@export initEnvironGIS
@@ -170,7 +162,7 @@ initEnvironGIS <- function(fname,DEMfname){
   execGRASS('g.proj', flags=c('c') ,  epsg=grass.epsg.code)
 
   # provide myenv and parameterlist for common use
-  result=list(iniparam,myenv)
+  result=list(ini,myenv)
   names(result)=c('ini','myenv')
 return (result)  
 }
