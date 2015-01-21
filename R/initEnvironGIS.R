@@ -27,7 +27,7 @@
 
 initEnvironGIS <- function(fname,DEMfname){
   
-
+  
   
   # (R) if necessary install libs 
   if (!require(RSAGA)){install.packages('RSAGA')}
@@ -58,7 +58,7 @@ initEnvironGIS <- function(fname,DEMfname){
   # (R) define working folder 
   root.dir <- trim(ini$Pathes$workhome)               # project folder 
   working.dir <- trim(ini$Pathes$runtimedata)         # working folder 
- 
+  
   ### set up of the correct projection information
   # To derive the correct proj.4 string for Austria MGI (EPSG:31254) is very NOT straightforward
   # due to the fact that the datum transformation from WGS84 to Bessel has to meet the data 
@@ -150,21 +150,21 @@ initEnvironGIS <- function(fname,DEMfname){
             location=grass.loc,
             override=TRUE,
             ifelse(Sys.info()["sysname"] == "Windows", use_g.dirseps.exe=FALSE, use_g.dirseps.exe=TRUE))
-           
+  
   execGRASS("g.gisenv", parameters=list(set=paste("'MAPSET=", grass.mapset,"'", sep="")))
-           
-# get extent BE CAREFULL this works only if the INPUT ASCII FILE CONTAINS TRULY THIS Projection
-# (1) import data in GRASS
+  
+  # get extent BE CAREFULL this works only if the INPUT ASCII FILE CONTAINS TRULY THIS Projection
+  # (1) import data in GRASS
   execGRASS('r.in.gdal',  flags=c('o',"overwrite"), input=DEMfname,  output='rastgrass', band=1)
-# (2) use the derived informations to complete the location settings
-
+  # (2) use the derived informations to complete the location settings
+  
   execGRASS('g.region',rast="rastgrass")
   execGRASS('g.proj', flags=c('c') ,  epsg=grass.epsg.code)
-
+  
   # provide myenv and parameterlist for common use
   result=list(ini,myenv)
   names(result)=c('ini','myenv')
-return (result)  
+  return (result)  
 }
 
 # returns string w/o leading or trailing whitespace

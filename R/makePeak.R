@@ -240,7 +240,6 @@ makePeak <- function(fname,DEMfname,iniparam,myenv,int=TRUE){
       if (i>1){
         final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],myenv=myenv,root.dir=root.dir, working.dir=working.dir)
         final.peak.list[i,5]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
-        final.peak.list[i,7]<-calculateEValue(final.peak.list[i,])
       }}
     fp<-final.peak.list
     df<-subset(fp,fp$dominance > 100 & fp$prominence > 150)

@@ -1,19 +1,11 @@
-#'@name costmergePeaks
+#'@name costMergePeaks
 #'@title Trys to merge indenpendent peak positions to provide a reliable join using a cost analysis
 #'@description  
 #' http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description
 #'
-#'@usage costmergePeaks(dem.peaklist,ext.peaklist)
+#'@usage costMergePeaks(dem.peaklist,ext.peaklist)
 #'@author Chris Reudenbach 
 #'
-#'@details 
-#'\tabular{ll}{
-#'Package: \tab Rpeak\cr
-#'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'License: \tab GPL (>= 2)\cr
-#'LazyLoad: \tab yes\cr
-#'}
 #'
 #'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
 #' 
@@ -21,15 +13,14 @@
 #'@param ext.peaklist external peaklist, containing coords name and altitude
 #'@param dem DEM data as a raster object
 #'
-#'@return costmergePeaks returns one merged peaklist with the names of the external peaks and the coords and altitude from the DEM derived list
+#'@return costMergePeaks returns one merged peaklist with the names of the external peaks and the coords and altitude from the DEM derived list
 #'
 #'@export costMergePeaks
 #'@examples   
-#'#### Example merge two peak lists
-
+#'#### Example merges the two peak lists
+#' note the ext.peaklist must contain at least valid coordinates and names
+#' 
 #'       new.peaklist<-costmergePeaks(dem.peaklist,ext.peaklist)
-
-
 
 
 costMergePeaks<- function(dem.peaklist,ext.peaklist,dem){

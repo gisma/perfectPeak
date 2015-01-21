@@ -26,10 +26,12 @@ You can use the function as it is or alternatively use it as skeleton control
 script that you cab adapt to your needs.
 }
 \examples{
-#### Example to Rpeak
+#### Example to use Rpeak for a common analysis run
 
-# It needs a georeferenced DEM as obligatory input. All parameters are read from
-# the demo.ini file. You will find some comments in the file.
+# You obligatory need a georeferenced DEM (GDAL format) as data input.
+Except the origin georefence all parameters are read from the demo.ini
+file. You will find some more comments in the file. NOTE the real projection of
+the DEM has to meet the projection string in the ini file
 
 
 ini.example=system.file("demo.ini", package="Rpeak")
@@ -41,6 +43,7 @@ Chris Reudenbach
 }
 \references{
 \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+           \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:lecture-notes:ag-ln-02}
 }
 \seealso{
 Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.
