@@ -50,11 +50,15 @@
 #'  #### Example to makePeaks in a specified ROI and 
 #'  #### create a dataframe containing coordinates, altitude and name and corresponding parameters
 #'       
-#' exampledata=system.file("dem.asc", package="perfectPeak")
+#' ini.example=system.file("demo.ini", package="perfectPeak")
+#' dem.example=system.file("test.asc", package="perfectPeak")
+#' # get ini params and myenv
+#' tmp<-initEnvironGIS(ini.example,dem.example)
+#' ini<-tmp$ini
+#' myenv<-tmp$myenv
 #' target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
-#' peak.list=makePeak(exampledata,'peak.list'peaklist.txt',2,'31254',target.projection')
-#' view(peak.list)
-#'
+#' peak.list=makePeak(DEMfname=dem.example,iniparam=ini,myenv=myenv)
+#' peak.list
 makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
  
   ### global settings
@@ -274,7 +278,7 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
     # as a first estimate to reduce the peaklist to more 'true' peaks 
     for (i in 1: nrow(final.peak.list)){
       # call calculate functions and put retrieved value into the corresponding dataframe field
-      final.peak.list[i,4]<-100000
+      final.peak.list[i,4]<-9999
       if (i>1){
         final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
         }}
