@@ -5,12 +5,12 @@
 \title{Example script that can be used as a wrapper function to start the
 perfect peak analysis}
 \usage{
-Rpeak(ini.file)
+Rpeak(INI.file,DEMfname)
 }
 \arguments{
-\item{fname}{character file storing the setup parameters as ini file}
-
 \item{DEMfname}{Digtial Elevation Model has to be a GDAL raster file}
+
+\item{INI}{ini file containing all setting and parameters for analysis}
 }
 \value{
 Rpeak returns the complete list as a dataframe of all parameters and results and
@@ -34,16 +34,19 @@ file. You will find some more comments in the file. NOTE the real projection of
 the DEM has to meet the projection string in the ini file
 
 
-ini.example=system.file("demo.ini", package="Rpeak")
-dem.example=system.file("test.asc", package="Rpeak")
+ini.example=system.file("demo.ini", package="perfectPeak")
+dem.example=system.file("test.asc", package="perfectPeak")
 Rpeak(ini.example,dem.example)
 }
 \author{
 Chris Reudenbach
 }
 \references{
-\url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
-           \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:lecture-notes:ag-ln-02}
+Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+
+Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}
+
+Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 }
 \seealso{
 Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.

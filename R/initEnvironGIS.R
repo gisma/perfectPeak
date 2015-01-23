@@ -19,8 +19,8 @@
 #'#### Example to initialize the enviroment and GIS bindings for use with R
 #'#### uses the ini list from an ini file
 #'       
-#' ini.example=system.file("demo.ini", package="Rpeak")
-#' dem.example=system.file("test.asc", package="Rpeak")
+#' ini.example=system.file("demo.ini", package="perfectPeak")
+#' dem.example=system.file("test.asc", package="perfectPeak")
 #' initEnvironGIS(ini.example,dem.example)
 #' gmeta6()
 #' 
@@ -40,18 +40,22 @@ initEnvironGIS <- function(fname,DEMfname){
   if (!require(igraph)){install.packages("igraph")}
   if (!require(gdata)){install.packages("gdata")}
   if (!require(gdistance)){install.packages("gdistance")}
+  if (!require(Matrix)){install.packages("Matrix")}
+  if (!require(rgeos)){install.packages("rgeos")}
   
   # (R) load libs
-  library(gdata)
-  library(RSAGA)
-  library(igraph)
-  library(gdalUtils)
-  library(raster)
-  library(spgrass6)
-  library(maptools)
   library(downloader)
-  library(sp)
   library(gdistance) 
+  library(Matrix)
+  library(maptools)
+  library(rgeos)
+  library(gdata)
+  library(igraph)
+  library(RSAGA)
+  library(spgrass6)
+  library(gdalUtils)
+  library(sp)
+  library(raster)
   
   # get environment
   ini<-iniParse(fname)  
@@ -73,29 +77,24 @@ initEnvironGIS <- function(fname,DEMfname){
   # this is without +towgs84 parameters (EPSG Code rarely provides the +towgs84 parameters due to authorithy 'problems') 
   # and paste then the correct +towgs84 string
   # we can take it from the internal proj.4 EPSG function list using make_EPSG()
-  #
   # NOTE This is an example for AUSTRIA EPSG31254 
-  #bessel.helmert.towgs84    <-'+towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232'
-  #bessel.molodensky.towgs84 <-'+towgs84=653.0,-212.0,449.0'
-  # for better understanding of this special case
-  # you may want to dive in the wild field of confusion corresponding to projection issues starting here:
-  # https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006058.html 
-  
-  # we take the projection of the data as provided by the meta data  
-  epsg.code<-trim(ini$Projection$targetepsg)
-  
-  ### section is obsolete just FYI
+  # bessel.helmert.towgs84    <-'+towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232'
+  # bessel.molodensky.towgs84 <-'+towgs84=653.0,-212.0,449.0'
   ## this option will generate the same basic string but WITH the bessel.molodensky.towgs84 parameter set
   ## unfortunately this is not correct for the used Tirol-DEM data
   # target.proj4<-as.character(CRS(paste0("+init=epsg:",epsg.code)))
-  
   ### WORKAROUND
   # we generate the internal proj.4 EPSG dataframe 
   ##df.epsg <- make_EPSG()
   # by using 'grep' and the epsg.code 
   # NOTE this provides the basic string without +towgs84 therefore we add the correct helmert.towgs84 transformation
   ##target.proj4<-as.character(paste(df.epsg[grep(epsg.code, df.epsg$code),3],helmert.towgs84))
-  ### section is obsolete just FYI
+  #### for better understanding of this special case
+  # you may want to dive in the wild field of confusion corresponding to projection issues starting here:
+  # https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006058.html 
+  
+  # projection of the data as provided by the meta data  
+  epsg.code<-trim(ini$Projection$targetepsg)
   
   # we take the corrrect string from the ini file
   target.proj4<-trim(ini$Projection$targetproj4)
@@ -167,5 +166,4 @@ initEnvironGIS <- function(fname,DEMfname){
   return (result)  
 }
 
-# returns string w/o leading or trailing whitespace
-trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+

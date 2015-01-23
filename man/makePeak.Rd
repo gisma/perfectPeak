@@ -3,63 +3,44 @@
 \name{makePeak}
 \alias{makePeak}
 \title{Wrapper function that perform some morphometric Digital Elevation Model
-(DEM) analysis to generate a set of reliable peaks. Additionally external point
-data from several sources can be used to name these unknown peaks.
-Currently two different approaches are available. First a simple approach using a filtered
-DEM that is then analysed for local maxima (SAGA's minmax module) is used. Second a more
-sophisticaded approach that classify the landforms of a DEM is utilized and with a first
-estimation of prominence and dominance analysis fileterd. If you choose this approach
-names of external data like Hattys Bergliste or the OSM data are merged to the generic
-DEM peaks. For further interest look in the reference section.}
+(DEM) analysis to generate a set of reliable peaks.}
 \usage{
-makePeak(dem.in, peak.list,make.peak.mode,epsg,target.proj4,kernel.size=5,int=TRUE)
+makePeak(DEMfname,iniparam,myenv)
 }
 \arguments{
-\item{dem.in}{DEM file in a common GDAL Format}
+\item{DEMfname}{name of georeferenced DEM data in GDAL format}
 
-\item{peak.list}{name of the  the ASCII file containing all peak parameters}
+\item{iniparam}{the full set of params as provided initEnvironGIS(). please look into the INI file for further settings of the makePEak() mode and special settings.
+peak.mode
 
-\item{peak.mode}{(1) minmax: extracts local maxima altitudes from an arbitrary Digital
-    Elevation Model (DEM) (optionally you may filter the data)
+(1) minmax: extracts local maxima altitudes from an arbitrary Digital
+                    Elevation Model (DEM) (optionally you may filter the data)
+
 (2) merged approach: extract peaks from a DEM by analyzing morphometry and
-    landscape forms using the algorithm of Wood et others. The peak landforms are
-    analyzed for MAximunm heights and this location is related
-    to external peak data from Harrys peaklist or OSM}
+                    landscape forms using the algorithm of Wood et others. The peak landforms are
+                    analyzed for MAximunm heights and this location is related
+                    to external peak data from Harrys peaklist or OSM}
 
-\item{kernel.size}{size of filter kernel in pixel, default=3}
-
-\item{epsg}{EPSG Code of the input data}
-
-\item{target.proj4}{proj.4 string for the target projection}
+\item{myenv}{SAGA environment variables provided by initEnvironGIS()}
 }
 \value{
-makepeak basically returns the following parameters:
-\tabular{ll}{
-xcoord \tab xcoordinate (mapunits)\cr
-ycoord \tab ycoordinate (mapunits)\cr
-altitude \tab altitude in meter\cr
-name \tab name of the peak\cr
-dominance \tab name of the peak\cr
-prominence \tab name of the peak\cr
-EValue \tab name of the peak\cr
-}
+makepeak basically returns a list of coordinates altitudes (and names)
+that will be used to calculate the independence value.
 }
 \description{
-Wrapper function that perform some morphometric Digital Elevation Model
-(DEM) analysis to generate a set of reliable peaks. Additionally external point
-data from several sources can be used to name these unknown peaks.
 Currently two different approaches are available. First a simple approach using a filtered
 DEM that is then analysed for local maxima (SAGA's minmax module) is used. Second a more
 sophisticaded approach that classify the landforms of a DEM is utilized and with a first
 estimation of prominence and dominance analysis fileterd. If you choose this approach
 names of external data like Hattys Bergliste or the OSM data are merged to the generic
-DEM peaks. For further interest look in the reference section.
+DEM peaks. Additionally external point data from several sources can be used to
+name these unknown peaks. For further information look in the reference section and the INI file.
 }
 \examples{
 #### Example to makePeaks in a specified ROI and
  #### create a dataframe containing coordinates, altitude and name and corresponding parameters
 
-exampledata=system.file("dem.asc", package="peRfectPeak")
+exampledata=system.file("dem.asc", package="perfectPeak")
 target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
 peak.list=makePeak(exampledata,'peak.list'peaklist.txt',2,'31254',target.projection')
 view(peak.list)
@@ -68,6 +49,16 @@ view(peak.list)
 Chris Reudenbach
 }
 \references{
-\url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+
+Rasemann, S., (2004), Geomorphometrische Struktur eines mesoskaligen alpinen Geosystems, Asgard-Verlag, St. Augustin, Bonner Geographische Abhandlungen, Heft Nr. 111, URL: \url{http://hss.ulb.uni-bonn.de/2003/0211/0211.htm}
+
+Wood, J.D., (1996), The geomorphological characterisation of digital elevation models. PhD Thesis, University of Leicester, UK
+
+Schmidt, J, & A. Hewitt, (2004). Fuzzy land element classification from DTMs based on geometry and terrain position. Geoderma 121.3, S.243-256. URL: \url{http://home.shirazu.ac.ir/~kompani/geomorphology/geomorphology-lec-papers-mehr88/schmidt-fuzzylandsurfaceclassifi-geoderma2004.pdf}
+
+Breitkreutz, H.: Gipfelliste. URL: \url{http://www.tourenwelt.info/commons/download/bergliste-komplett.kmz.php}
+
+OSM natural: keys \url{http://wiki.openstreetmap.org/wiki/Key:natural}
 }
 

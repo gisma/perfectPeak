@@ -23,44 +23,53 @@
 #'       new.peaklist<-costmergePeaks(dem.peaklist,ext.peaklist)
 
 
-costMergePeaks<- function(dem.peaklist,ext.peaklist,dem){
+costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres){
+  # costpath is pretty time consuming so we construct a max search distance from the dsistance matrix + the dom threshold
   dist<-as.data.frame(pointDistance(ext.peaklist,dem.peaklist,lonlat=FALSE,allpairs=TRUE))
-  min.dist<-  max(apply(dist,1,min),na.rm=TRUE)
+  min.dist<-  max(apply(dist,1,min),na.rm=TRUE)+domthres
+  # incert the DEM to get a costraster by inverted altitudes
   costraster=(dem*-1)+maxValue(setMinMax(dem))
+  # generate a df dor the results
   cost<-data.frame()
-  
+  # do peak by peak
   for (i in 1: nrow(ext.peaklist)){
+    # set startpoint of first list (external list)
     start=ext.peaklist[i,]
     for (j in 1: nrow(dem.peaklist)){
+      # with this point start costpath loop if the target peak distance is less then mindist
       if (dist[i,j] <= min.dist){
+      # set target peak as end point (from DEMpeaklist)
       end=dem.peaklist[j,]
+      # caluclate transition raster
       tr=transition(costraster, mean, directions=8)
+      # correct it by geometry
       trC=geoCorrection(tr)
+      # calculate the costpath
       costpath=shortestPath(trC, start, end,output="SpatialLines")
+      # because you are bored plot it
       plot(costraster)
       lines(costpath)
+      # get the values of each path
       tmp<-extract(costraster, costpath)
       tmp.sum <- lapply(tmp, function(i) {
         # get sum inverted altitude
         val.sum <- sum(i)
         return(val.sum)
       })
+      # put the result in the cost matrix
       cost[i,j] = tmp.sum
       }else{cost[i,j]<-NA}
     }}
+  # filter for min Value
   cost.min<-rowMin(cost)
+  # take the original df 
   ep<-as.data.frame(ext.peaklist)
   dp<-as.data.frame(dem.peaklist)
-  
+  # and merge them with using the min cost results
   newdp<-dp[apply(cost,1,which.min),]
   newdp$name<-ep$df.sub.Name
   
   return(newdp)
 } 
 
-rowMin = function(x) {
-  # Construct a call pmin(x[,1],x[,2],...x[,NCOL(x)])
-  code = paste("x[,",1:(NCOL(x)),"]",sep="",collapse=",")
-  code = paste("pmin(",code,")")
-  return(eval(parse(text=code)))
-} 
+

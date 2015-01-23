@@ -23,18 +23,6 @@ calculateProminence returns the prominence value of the current peak
 \description{
 Calculates the prominence Value for a given tuple of coordinates and altitude
 as derived from DEM d = dominance horizontal distance to the next higher altirude in the sourrounding
-Sources:    Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112
-            http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html#             (Zugriff: 20.05.2012)
-            Leonhard, W. (2012): Eigenständigkeit von Gipfeln. -
-}
-\details{
-\tabular{ll}{
-Package: \tab Rpeak\cr
-Type: \tab Package\cr
-Version: \tab 0.2\cr
-License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-}
 }
 \examples{
 #### Example to calculateProminence
@@ -45,6 +33,10 @@ calculateProminence(peaklist.tupel)
 Chris Reudenbach
 }
 \references{
-\url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+
+Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}
+
+Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 }
 

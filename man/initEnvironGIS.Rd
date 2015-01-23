@@ -21,8 +21,8 @@ Function that initializes environment pathes, SAGA, GRASS and GDAL support (and 
 #### Example to initialize the enviroment and GIS bindings for use with R
 #### uses the ini list from an ini file
 
-ini.example=system.file("demo.ini", package="Rpeak")
-dem.example=system.file("test.asc", package="Rpeak")
+ini.example=system.file("demo.ini", package="perfectPeak")
+dem.example=system.file("test.asc", package="perfectPeak")
 initEnvironGIS(ini.example,dem.example)
 gmeta6()
 }

@@ -10,17 +10,11 @@
 #'@usage calculateDominance(x.coord, y.coord, altitude)
 #'@author Chris Reudenbach 
 #'
-#'@details
-#'\tabular{ll}{
-#'Package: \tab Rpeak\cr
-#'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'License: \tab GPL (>= 2)\cr
-#'LazyLoad: \tab yes\cr
-#'}
+
 #'
-#'
-#'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+#'@references Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+#'@references Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}
+#'@references Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 #' 
 #'@param xcoord xcoordinate (mapunits)
 #'@param ycoord ycoordinate (mapunits)
@@ -35,7 +29,7 @@
 #'       
 #' calculateDominance <- function(peaklist.tupel)
 
-calculateDominance <- function(x.coord, y.coord, altitude, int=TRUE,myenv,root.dir, working.dir){
+calculateDominance <- function(x.coord, y.coord, altitude,exact.enough, int=TRUE,myenv,root.dir, working.dir){
 
   #- we need to create a mask file nodata=no peaks/1= current peak to calculate
   # the proximity:
@@ -65,7 +59,7 @@ calculateDominance <- function(x.coord, y.coord, altitude, int=TRUE,myenv,root.d
   system('saga_cmd grid_tools "Proximity Grid" -FEATURES run_peak.sgrd -DISTANCE run_dist.sgrd')
   # (2) mask altitudes altidude >  current peak altitude
   # (SAGA) mask level >  floor(altitude)+1 set remaining grid to nodata
-  rsaga.grid.calculus('mp_dem.sgrd', 'run_level.sgrd', (paste0("ifelse(gt(a,", ceiling(altitude) ,"),1,-99999)")), env=myenv)
+  rsaga.grid.calculus('mp_dem.sgrd', 'run_level.sgrd', (paste0("ifelse(gt(a,", ceiling(altitude+exact.enough/2),"),1,-99999)")), env=myenv)
   
   # (3) (SAGA) multiply level-mask by proximity raster to keep all valid distance values
   system('saga_cmd grid_calculus 1 -GRIDS "run_level.sgrd;run_dist.sgrd" -RESULT run.sgrd -FORMULA="a*b"')

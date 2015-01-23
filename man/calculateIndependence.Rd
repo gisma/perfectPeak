@@ -2,7 +2,7 @@
 % Please edit documentation in R/calculateIndependence.R
 \name{calculateIndependence}
 \alias{calculateIndependence}
-\title{Calculates the Eigenstaendigkeitswert of a summit with given parameters dominance (d) and prominence (p)}
+\title{Calculates the independence value of a summit}
 \usage{
 calculateIndependence(peaklist.tupel)
 }
@@ -14,7 +14,7 @@ calculateIndependence returns the E Value of the current peak
 }
 \description{
 Calculates the independence Value (E) for a given set of coordinates,
-altitude, dominance and prominence according to the formula as suggested by Rauch:
+altitude, dominance and prominence values according to the formula as suggested by Rauch:
 
 if d<100000: E = -((log2  (h / 8848) + log2 (d / 100000) + log2(p / h)) / 3)
 if d>100000: E = -((log2 (h / 8848) + log2(p / h)) / 3)
@@ -38,6 +38,10 @@ calculateIndependence()
 Chris Reudenbach
 }
 \references{
-\url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+
+Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}
+
+Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 }
 

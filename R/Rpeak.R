@@ -12,18 +12,26 @@
 #'
 #'@seealso Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.
 #'Leonhard, W. (2012): Eigenständigkeit von Gipfeln. - 
+
+
 #'
-#'
-#'@usage Rpeak(ini.file)
-#'@author Chris Reudenbach 
-#'
-#'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
-#'            \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:lecture-notes:ag-ln-02}
+#'@usage Rpeak(INI.file,DEMfname)
+
+
 #'
 #' 
-#'@param fname character file storing the setup parameters as ini file
+#'@param INI ini file containing all setting and parameters for analysis
 #'@param DEMfname Digtial Elevation Model has to be a GDAL raster file
 #'
+
+
+
+#'@author Chris Reudenbach 
+#'
+#'
+#'@references Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
+#'@references Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}
+#'@references Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 #'@return Rpeak returns the complete list as a dataframe of all parameters and results and 
 #' generates some output (maps and tables)
 #'
@@ -42,8 +50,8 @@
 #' the DEM has to meet the projection string in the ini file
 #'
 #'
-#' ini.example=system.file("demo.ini", package="Rpeak")
-#' dem.example=system.file("test.asc", package="Rpeak")
+#' ini.example=system.file("demo.ini", package="perfectPeak")
+#' dem.example=system.file("test.asc", package="perfectPeak")
 #' Rpeak(ini.example,dem.example)
 #' 
 #' 
@@ -75,7 +83,7 @@ target.proj4<-  trim(ini$Projection$targetproj4)            # corrrect string fr
 latlon.proj4<-  as.character(CRS("+init=epsg:4326"))        # basic latlon wgs84 proj4 string
 
 # preprocessing of all data 
-final.peak.list<-makePeak(fname=fname,DEMfname=dem.in,iniparam=ini,myenv=myenv)
+final.peak.list<-makePeak(DEMfname=dem.in,iniparam=ini,myenv=myenv)
 
 ### (R) final analysis and calculatuin of dominance, prominence, and independence
 
@@ -84,8 +92,8 @@ for (i in 1: nrow(final.peak.list)){
   # functions retrieve the value and put it into the corresponding dataframe field.
   # i>1 because of the highest peak is the reference and can not be calculated
   if (i>1){
-    final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],myenv=myenv,root.dir=root.dir, working.dir=working.dir)
-    final.peak.list[i,5]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+    final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+    final.peak.list[i,5]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
     final.peak.list[i,7]<-calculateIndependence(final.peak.list[i,])
   }}
 
