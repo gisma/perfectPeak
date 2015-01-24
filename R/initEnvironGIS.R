@@ -38,7 +38,7 @@ initEnvironGIS <- function(fname,DEMfname){
   if(length(libraries[!inst]) > 0) install.packages(libraries[!inst])
   
   # Load packages into session 
-  lapply(.packages, require, character.only=TRUE)
+  lapply(libraries, require, character.only=TRUE)
   
   # get environment
   ini<-iniParse(fname)  
