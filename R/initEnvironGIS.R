@@ -27,35 +27,18 @@
 
 initEnvironGIS <- function(fname,DEMfname){
   
-  
-  
-  # (R) if necessary install libs 
-  if (!require(RSAGA)){install.packages('RSAGA')}
-  if (!require(rgdal)){install.packages('rgdal')}
-  if (!require(raster)){install.packages('raster')}
-  if (!require(gdalUtils)){install.packages('gdalUtils')}
-  if (!require(spgrass6)){install.packages('spgrass6')}
-  if (!require(maptools)){install.packages("maptools")}
-  if (!require(downloader)){install.packages("downloader")}
-  if (!require(igraph)){install.packages("igraph")}
-  if (!require(gdata)){install.packages("gdata")}
-  if (!require(gdistance)){install.packages("gdistance")}
-  if (!require(Matrix)){install.packages("Matrix")}
-  if (!require(rgeos)){install.packages("rgeos")}
-  
-  # (R) load libs
-  library(downloader)
-  library(gdistance) 
-  library(Matrix)
-  library(maptools)
-  library(rgeos)
-  library(gdata)
-  library(igraph)
-  library(RSAGA)
-  library(spgrass6)
-  library(gdalUtils)
-  library(sp)
-  library(raster)
+ # check for packages and if necessary install libs 
+  libraries <-c("downloader","sp","raster","maptools",
+              "RSAGA","rgeos","gdata","Matrix","igraph",
+              "rgdal","gdistance", "spgrass6", "gdalUtils")
+
+  for(library in libraries) 
+  { 
+    if(!UsePackage(library))
+    {
+      stop("Error!", library)
+    }
+  }
   
   # get environment
   ini<-iniParse(fname)  
