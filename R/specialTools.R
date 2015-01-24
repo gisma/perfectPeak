@@ -1,9 +1,6 @@
 #'@title Special Tools
 #'@export trim
 #'@export rowMin
-#'@export InstalledPackage
-#'@export CRANChoosen
-#'@export UsePackage
 #'
 # returns string w/o leading or trailing whitespace
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)

@@ -28,17 +28,17 @@
 initEnvironGIS <- function(fname,DEMfname){
   
   # check for packages and if necessary install libs 
-  libraries <-c("downloader","sp","raster","maptools",
-                "RSAGA","rgeos","gdata","Matrix","igraph",
-                "rgdal","gdistance", "spgrass6", "gdalUtils")
+  libraries<-c("downloader","sp","raster","maptools",
+               "RSAGA","rgeos","gdata","Matrix","igraph",
+               "rgdal","gdistance", "spgrass6", "gdalUtils")
+  
   
   # Install CRAN packages (if not already installed)
-  inst.pack <- libraries %in% installed.packages()
-  if(length(libraries[!inst.pack]) > 0) install.packages(.packages[!inst.pack])
+  inst <- libraries %in% installed.packages()
+  if(length(libraries[!inst]) > 0) install.packages(libraries[!inst])
   
   # Load packages into session 
   lapply(.packages, require, character.only=TRUE)
-  
   
   # get environment
   ini<-iniParse(fname)  
