@@ -65,21 +65,21 @@ myenv<-i$myenv
 ### assign varnames to runtime varnames 
 
 # set working folder 
-root.dir <- trim(ini$Pathes$workhome)               # project folder 
-working.dir <- trim(ini$Pathes$runtimedata)         # working folder 
+root.dir <- ini$Pathes$workhome               # project folder 
+working.dir <- ini$Pathes$runtimedata         # working folder 
 
 # (R) set filenames 
-peak.list<- trim(ini$Files$peaklist)                       # output file name of peaklist
+peak.list<- ini$Files$peaklist                      # output file name of peaklist
 dem.in<-    DEMfname                                       # input DEM (has to be GDAL conform)
 if (dem.in==''){
-  dem.in<-  trim(ini$Files$fndem)}                       
+  dem.in<-  ini$Files$fndem}                       
 # (R) set runtime arguments
-ext.peak<-      trim(ini$Params$externalpeaks)              # harry= Harrys Peaklist osm= OSM peak data
-kernel.size<-   trim(ini$Params$filterkernelsize)           # size of filter for mode=1; range 3-30; default=5 
-make.peak.mode<-trim(ini$Params$makepeakmode)               #  mode:1=minmax,2=wood&Co.
-exact.enough<-  as.numeric(trim(ini$Params$exactenough))    # vertical exactness of flooding in meter
-epsg.code<-     as.numeric(trim(ini$Projection$targetepsg)) # projection of the data as provided by the meta data  
-target.proj4<-  trim(ini$Projection$targetproj4)            # corrrect string from the ini file
+ext.peak<-      ini$Params$externalpeaks              # harry= Harrys Peaklist osm= OSM peak data
+kernel.size<-   ini$Params$filterkernelsize           # size of filter for mode=1; range 3-30; default=5 
+make.peak.mode<-ini$Params$makepeakmode               #  mode:1=minmax,2=wood&Co.
+exact.enough<-  as.numeric(ini$Params$exactenough)    # vertical exactness of flooding in meter
+epsg.code<-     as.numeric(ini$Projection$targetepsg) # projection of the data as provided by the meta data  
+target.proj4<-  ini$Projection$targetproj4            # corrrect string from the ini file
 latlon.proj4<-  as.character(CRS("+init=epsg:4326"))        # basic latlon wgs84 proj4 string
 
 # preprocessing of all data 

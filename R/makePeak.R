@@ -64,38 +64,38 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
   ### global settings
   # set environment
   # (R) define working folder 
-  root.dir <- trim(iniparam$Pathes$workhome)               # project folder 
-  working.dir <- trim(iniparam$Pathes$runtimedata)         # working folder 
+  root.dir <- iniparam$Pathes$workhome               # project folder 
+  working.dir <- iniparam$Pathes$runtimedata         # working folder 
   
   # (R) set filenames 
-  peak.list<-trim(iniparam$Files$peaklist)                 # output file name of peaklist
+  peak.list<-iniparam$Files$peaklist                 # output file name of peaklist
   dem.in<-DEMfname
   if (dem.in==''){
-    dem.in<-trim(iniparam$Files$fndem)}                       # input DEM (has to be GDAL conform)                       # input DEM (has to be GDAL conform)
+    dem.in<-iniparam$Files$fndem}                       # input DEM (has to be GDAL conform)                       # input DEM (has to be GDAL conform)
   # (R) set runtime arguments
-  ext.peak<-trim(iniparam$Params$externalpeaks)                        # harry= Harrys Peaklist osm= OSM peak data
-  kernel.size<-as.numeric(trim(iniparam$Params$filterkernelsize))      # size of filter for mode=1; range 3-30; default=5 
-  make.peak.mode<-trim(iniparam$Params$makepeakmode)                   #  mode:1=minmax,2=wood&Co.
-  exact.enough<-as.numeric(trim(iniparam$Params$exactenough))          # vertical exactness of flooding in meter
-  epsg.code<-trim(iniparam$Projection$targetepsg)                      # epsg code of the target data
-  target.proj4<-trim(iniparam$Projection$targetproj4)                  # proj4 proejction string as set in ini file
+  ext.peak<-iniparam$Params$externalpeaks                        # harry= Harrys Peaklist osm= OSM peak data
+  kernel.size<-as.numeric(iniparam$Params$filterkernelsize)      # size of filter for mode=1; range 3-30; default=5 
+  make.peak.mode<-iniparam$Params$makepeakmode                   #  mode:1=minmax,2=wood&Co.
+  exact.enough<-as.numeric(iniparam$Params$exactenough)          # vertical exactness of flooding in meter
+  epsg.code<-iniparam$Projection$targetepsg                      # epsg code of the target data
+  target.proj4<-iniparam$Projection$targetproj4                  # proj4 proejction string as set in ini file
   latlon.proj4<-as.character(CRS("+init=epsg:4326"))                   # latlon wgs84 proj4 string
-  domthres<-as.numeric(trim(iniparam$Params$domthres))                 # threshold for accepted range of dominance used in makepeak=2
-  merge<-as.numeric(trim(iniparam$Params$mergemode))                   # threshold for accepted range of dominance used in makepeak=2
+  domthres<-as.numeric(iniparam$Params$domthres)                 # threshold for accepted range of dominance used in makepeak=2
+  merge<-as.numeric(iniparam$Params$mergemode)                   # threshold for accepted range of dominance used in makepeak=2
   
   
   #Wood
-  wsize<-as.numeric(trim(iniparam$Wood$WSIZE))
-  tol.slope<-as.numeric(trim(iniparam$Wood$TOL_SLOPE))
-  tol.curve<-as.numeric(trim(iniparam$Wood$TOL_CURVE))
-  exponent<-as.numeric(trim(iniparam$Wood$EXPONENT))
-  zscale<-as.numeric(trim(iniparam$Wood$ZSCALE))
+  wsize<-as.numeric(iniparam$Wood$WSIZE)
+  tol.slope<-as.numeric(iniparam$Wood$TOL_SLOPE)
+  tol.curve<-as.numeric(iniparam$Wood$TOL_CURVE)
+  exponent<-as.numeric(iniparam$Wood$EXPONENT)
+  zscale<-as.numeric(iniparam$Wood$ZSCALE)
   # fuzzylandform
-  slope.to.deg<-trim(iniparam$FuzzyLf$SLOPETODEG)
-  t.slope.min<-as.numeric(trim(iniparam$FuzzyLf$T_SLOPE_MIN))
-  t.slope.max<-as.numeric(trim(iniparam$FuzzyLf$T_SLOPE_MAX))
-  t.curve.min<-as.numeric(trim(iniparam$FuzzyLf$T_CURVE_MIN))
-  t.curve.max<-as.numeric(trim(iniparam$FuzzyLf$T_CURVE_MAX))
+  slope.to.deg<-iniparam$FuzzyLf$SLOPETODEG
+  t.slope.min<-as.numeric(iniparam$FuzzyLf$T_SLOPE_MIN)
+  t.slope.max<-as.numeric(iniparam$FuzzyLf$T_SLOPE_MAX)
+  t.curve.min<-as.numeric(iniparam$FuzzyLf$T_CURVE_MIN)
+  t.curve.max<-as.numeric(iniparam$FuzzyLf$T_CURVE_MAX)
   
   ### local settings 
   # internal SAGA name of DEM data file  

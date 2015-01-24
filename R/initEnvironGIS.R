@@ -43,8 +43,8 @@ initEnvironGIS <- function(fname,DEMfname){
   # get environment
   ini<-iniParse(fname)  
   # (R) define working folder 
-  root.dir <- trim(ini$Pathes$workhome)               # project folder 
-  working.dir <- trim(ini$Pathes$runtimedata)         # working folder 
+  root.dir <- ini$Pathes$workhome               # project folder 
+  working.dir <- ini$Pathes$runtimedata         # working folder 
   
   ### set up of the correct projection information
   # To derive the correct proj.4 string for Austria MGI (EPSG:31254) is very NOT straightforward
@@ -77,10 +77,10 @@ initEnvironGIS <- function(fname,DEMfname){
   # https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006058.html 
   
   # projection of the data as provided by the meta data  
-  epsg.code<-trim(ini$Projection$targetepsg)
+  epsg.code<-ini$Projection$targetepsg
   
   # we take the corrrect string from the ini file
-  target.proj4<-trim(ini$Projection$targetproj4)
+  target.proj4<-ini$Projection$targetproj4
   
   # we will also need the  basic latlon wgs84 proj4 string
   latlon.proj4<-as.character(CRS("+init=epsg:4326")) 
@@ -101,13 +101,13 @@ initEnvironGIS <- function(fname,DEMfname){
   
   # (R) set pathes  of SAGA/GRASS modules and binaries depending on OS
   if(Sys.info()["sysname"] == "Windows"){
-    os.saga.path<-trim(ini$SysPath$wossaga)
-    saga.modules<-trim(ini$SysPath$wsagamodules)
-    grass.gis.base<-trim(ini$SysPath$wgrassgisbase)
+    os.saga.path<-ini$SysPath$wossaga
+    saga.modules<-ini$SysPath$wsagamodules
+    grass.gis.base<-ini$SysPath$wgrassgisbase
   }else if (Sys.info()["sysname"] == "Linux"){
-    os.saga.path<-trim(ini$SysPath$lossaga)
-    saga.modules<-trim(ini$SysPath$lsagamodules)
-    grass.gis.base<-trim(ini$SysPath$lgrassgisbase)
+    os.saga.path<-ini$SysPath$lossaga
+    saga.modules<-ini$SysPath$lsagamodules
+    grass.gis.base<-ini$SysPath$lgrassgisbase
   }
   if (!file.exists(file.path(root.dir, working.dir))){
     dir.create(file.path(root.dir, 'run'),recursive = TRUE)

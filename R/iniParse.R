@@ -39,8 +39,8 @@ iniParse <- function(fname)
   d <- subset(transform(d, V3 = V2[which(L)[cumsum(L)]])[1:3],
               V1 != "")
   
-  to.parse  <- paste("ini.list$", d$V3, "$",  d$V1, " <- '",
-                     d$V2, "'", sep="")
+  to.parse  <- trim(paste("ini.list$", trim(d$V3), "$",  trim(d$V1), " <- '",
+                     trim(d$V2), "'", sep=""))
   
   ini.list <- list()
   eval(parse(text=to.parse))
