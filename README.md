@@ -10,5 +10,5 @@ The perfectPeak package is the implementation of the different algorithms in R.
 
 Find further information at:
 
-[Advanced GIS](http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description)
+[Marburg Open Courseware - Advanced GIS](http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description)
 
