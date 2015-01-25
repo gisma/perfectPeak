@@ -11,7 +11,7 @@
 #' DEM peaks. Additionally external point data from several sources can be used to 
 #' name these unknown peaks. For further information look in the reference section and the INI file.
 #' 
-#'@usage makePeak(DEMfname,iniparam,myenv)
+#'@usage makePeak(fname.DEM,iniparam,myenv)
 #'@author Chris Reudenbach 
 #'
 #'@references Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
@@ -35,7 +35,7 @@
 #'                     analyzed for MAximunm heights and this location is related 
 #'                     to external peak data from Harrys peaklist or OSM
 #'@param myenv SAGA environment variables provided by initEnvironGIS()
-#'@param DEMfname name of georeferenced DEM data in GDAL format
+#'@param fname.DEM name of georeferenced DEM data in GDAL format
 
 
 
@@ -49,17 +49,21 @@
 #'@examples   
 #'  #### Example to makePeaks in a specified ROI and 
 #'  #### create a dataframe containing coordinates, altitude and name and corresponding parameters
-#'       
-#' ini.example=system.file("demo.ini", package="perfectPeak")
-#' dem.example=system.file("test.asc", package="perfectPeak")
+#' # assign file names
+#' ini.demo=system.file("data","demo.ini", package="perfectPeak")
+#' dem.demo=system.file("data","test.asc", package="perfectPeak")
+#'
 #' # get ini params and myenv
-#' tmp<-initEnvironGIS(ini.example,dem.example)
+#' tmp<-initEnvironGIS(ini.demo,dem.edemo)
 #' ini<-tmp$ini
 #' myenv<-tmp$myenv
+#' #define traget projection
 #' target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
-#' peak.list=makePeak(DEMfname=dem.example,iniparam=ini,myenv=myenv)
+#' peak.list=makePeak(fname.DEM=dem.demo,iniparam=ini,myenv=myenv)
 #' peak.list
-makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
+#'
+
+makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
  
   ### global settings
   # set environment
@@ -69,7 +73,7 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
   
   # (R) set filenames 
   peak.list<-iniparam$Files$peaklist                 # output file name of peaklist
-  dem.in<-DEMfname
+  dem.in<-fname.DEM
   if (dem.in==''){
     dem.in<-iniparam$Files$fndem}                       # input DEM (has to be GDAL conform)                       # input DEM (has to be GDAL conform)
   # (R) set runtime arguments
@@ -99,18 +103,15 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
   
   ### local settings 
   # internal SAGA name of DEM data file  
-  fname='mp_dem.sdat'
+  dem.out='mp_dem.sdat'
   
   # (GDAL) gdalwarp is used to (1) convert the data format (2) assign the
   # projection information to the data.
-  gdalwarp(dem.in, fname, overwrite=TRUE, s_srs=paste0('EPSG:',epsg.code), of='SAGA')  
+  gdalwarp(dem.in, dem.out, overwrite=TRUE, s_srs=paste0('EPSG:',epsg.code), of='SAGA')  
   
   # (raster) read GDAL data set
-  dem<- raster(fname)
-  
-  # we reproject it to get the geographical coordinates
-  dem.latlon<-projectRaster(dem, crs=latlon.proj4, method="ngb")
-  
+  dem<- raster(dem.out)
+
   
   # (1=MinMax) (2=Merged Wood/peaklist, 3= not implemented)
   if (make.peak.mode==1){
@@ -296,15 +297,15 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
     
     if (ext.peak=='harry') {
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,extractHarry(dem.latlon,latlon.proj4,target.proj4))}
+      if(merge==1){df<-distMergePeaks(SP,extractHarry(extent,latlon.proj4,target.proj4))}
       # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,extractHarry(dem.latlon,latlon.proj4,target.proj4),dem,domthres)}
+      if(merge==2){df<-costMergePeaks(SP,extractHarry(extent,latlon.proj4,target.proj4),dem,domthres)}
     }
     else if (ext.peak=='osm') {
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,extractOSMPoints(dem.latlon,latlon.proj4,target.proj4))}
+      if(merge==1){df<-distMergePeaks(SP,extractOSMPoints(extent,latlon.proj4,target.proj4))}
       # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,extractOSMPoints(dem.latlon,latlon.proj4,target.proj4),dem,domthres)}
+      if(merge==2){df<-costMergePeaks(SP,extractOSMPoints(extent,latlon.proj4,target.proj4),dem,domthres)}
     }
            else {print('not implemented external peak data input')}
            }

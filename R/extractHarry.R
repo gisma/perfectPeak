@@ -53,7 +53,7 @@ extractHarry <- function(dem.latlon,latlon.proj4,target.proj4){
   df$Altitude<- altitude
   
   # making a subset of the ROI (that is the current extent)
-  df.sub = subset(df, df$Longitude >= dem.latlon@extent@xmin & df$Longitude <= dem.latlon@extent@xmax & df$Latitude >= dem.latlon@extent@ymin & df$Latitude  <= dem.latlon@extent@ymax)
+  df.sub = subset(df, df$Longitude >= dem.latlon$xmin & df$Longitude <= dem.latlon$xmax & df$Latitude >= dem.latlon$ymin & df$Latitude  <= dem.latlon$ymax)
   
   #Now it's getting spatial
   # first we have to assign lat lon geographic coordinates

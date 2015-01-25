@@ -4,12 +4,12 @@
 \alias{initEnvironGIS}
 \title{Function that initializes RSAGA, GRASS GDAL and the R packages}
 \usage{
-initEnvironGIS(ini.file)
+initEnvironGIS(fname.control)
 }
 \arguments{
-\item{DEMfname}{name of used raster DEM (GDAL format)}
+\item{fname.control}{name of the session ini.file}
 
-\item{ini.file}{name of the session ini.file}
+\item{fname.DEM}{name of used raster DEM (GDAL format)}
 }
 \value{
 initEnvironGIS initializes the usage of the GIS packages and other utilities

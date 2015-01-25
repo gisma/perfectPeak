@@ -5,12 +5,12 @@
 \title{Example script that can be used as a wrapper function to start the
 perfect peak analysis}
 \usage{
-Rpeak(INI.file,DEMfname)
+Rpeak(fname.control,fname.DEM)
 }
 \arguments{
-\item{DEMfname}{Digtial Elevation Model has to be a GDAL raster file}
+\item{fname.control}{name of control file containing all setting and parameters for analysis}
 
-\item{INI}{ini file containing all setting and parameters for analysis}
+\item{fname.DEM}{name Digtial Elevation Model has to be a GDAL raster file}
 }
 \value{
 Rpeak returns the complete list as a dataframe of all parameters and results and
@@ -34,8 +34,8 @@ file. You will find some more comments in the file. NOTE the real projection of
 the DEM has to meet the projection string in the ini file
 
 
-ini.example=system.file("demo.ini", package="perfectPeak")
-dem.example=system.file("test.asc", package="perfectPeak")
+ini.example=system.file("data","demo.ini", package="perfectPeak")
+dem.example=system.file("data","test.asc", package="perfectPeak")
 Rpeak(ini.example,dem.example)
 }
 \author{

@@ -4,10 +4,10 @@
 #'
 #'@description Function that initializes environment pathes, SAGA, GRASS and GDAL support (and the bindings to the corresponding R packages and the R packages *NOTE* you probably have to customize some settings ini file
 #' 
-#'@usage initEnvironGIS(ini.file)
+#'@usage initEnvironGIS(fname.control)
 #'
-#'@param ini.file name of the session ini.file
-#'@param DEMfname name of used raster DEM (GDAL format)
+#'@param fname.control name of the session ini.file
+#'@param fname.DEM name of used raster DEM (GDAL format)
 #'
 #'@author Chris Reudenbach 
 #'
@@ -25,7 +25,7 @@
 #' gmeta6()
 #' 
 
-initEnvironGIS <- function(fname,DEMfname){
+initEnvironGIS <- function(fname.control,fname.DEM){
   
   # check for packages and if necessary install libs 
   libraries<-c("downloader","sp","raster","maptools","osmar",
@@ -40,7 +40,7 @@ initEnvironGIS <- function(fname,DEMfname){
   lapply(libraries, require, character.only=TRUE)
   
   # get environment
-  ini<-iniParse(fname)  
+  ini<-iniParse(fname.control)  
   
   # (R) assign local vars for working folder 
   root.dir <- ini$Pathes$workhome               # project folder 
@@ -54,9 +54,19 @@ initEnvironGIS <- function(fname,DEMfname){
   
   # target projection (actually the projection of the DEM)
   target.proj4<-ini$Projection$targetproj4
-  
   # we will also need the  basic latlon wgs84 proj4 string
-  latlon.proj4<-as.character(CRS("+init=epsg:4326")) 
+  latlon.proj4<-ini$Projection$latlonproj4
+
+  # (raster) read GDAL data set
+  dem<- raster(fname.DEM)
+  projection(dem)<-target.proj4
+  # we reproject it to get the geographical coordinates
+  dem.latlon<-projectRaster(dem, crs=latlon.proj4, method="ngb")
+  # we put it in the variable extent and name cols and rows
+  extent<-data.frame(cbind(dem.latlon@extent@xmin,dem.latlon@extent@xmax, dem.latlon@extent@ymin, dem.latlon@extent@ymax))
+  colnames(extent)<-c('xmin','xmax','ymin', 'ymax')
+  rownames(extent)<-c(basename(fname.DEM))
+  
   
   ### now starting the setup of the packages bindings
   
@@ -110,14 +120,14 @@ initEnvironGIS <- function(fname,DEMfname){
   
   # get extent BE CAREFULL this works only if the INPUT ASCII FILE CONTAINS TRULY THIS Projection
   # (1) import data in GRASS
-  execGRASS('r.in.gdal',  flags=c('o',"overwrite"), input=DEMfname,  output='rastgrass', band=1)
+  execGRASS('r.in.gdal',  flags=c('o',"overwrite"), input=fname.DEM,  output='rastgrass', band=1)
   # (2) use the derived informations to complete the location settings
   
   execGRASS('g.region',rast="rastgrass")
   execGRASS('g.proj', flags=c('c') ,  epsg=grass.epsg.code)
   
   # provide myenv and parameterlist for common use
-  result=list(ini,myenv)
-  names(result)=c('ini','myenv')
+  result=list(ini,myenv,extent)
+  names(result)=c('ini','myenv','extent')
   return (result)  
 }

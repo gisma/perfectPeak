@@ -4,10 +4,10 @@
 \alias{iniParse}
 \title{Parse an Windows like ini file to get the the entries}
 \usage{
-iniParse(fname)
+iniParse(fname.control)
 }
 \arguments{
-\item{fname}{file name of the ASCII INI file}
+\item{fname.control}{file name of control input file}
 }
 \value{
 iniParse returns a list ordered by sections variablenames and values

@@ -4,12 +4,15 @@
 \alias{extractHarry}
 \title{Extract peak position and altitude from Harry's Bergliste}
 \usage{
-harry(dem,current.proj4)
+harry(dem,target.proj4)
 }
 \arguments{
 \item{dem}{is a Digital Elevation Model with geographic coordinates}
 
 \item{target.projection}{is a valid proj.4 string containing the correct target crs}
+}
+\value{
+Spatial data point object ofthe ROI containing peak data
 }
 \description{
 The current Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest
@@ -18,9 +21,9 @@ The current Kmz file of Harry's peak list is downloaded and will be cleaned to d
 #### Example to extract the ROI and
  #### create a dataframe containing coordinates, altitude and name
 
-exampledem=system.file("dem.asc", package="perfectPeak")
+dem.example=system.file("dem.asc", package="perfectPeak")
 target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
-extractHarry(exampledem,'target.projection')
+extractHarry(dem.example,target.projection)
 }
 \author{
 Chris Reudenbach

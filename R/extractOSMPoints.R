@@ -41,7 +41,7 @@ extractOSMPoints <- function(dem.latlon,latlon.proj4,target.proj4){
 
     
   # define the spatial extend of the OSM data we want to retrieve
-  osm.extend <- corner_bbox(dem.latlon@extent@xmin,dem.latlon@extent@ymin,dem.latlon@extent@xmax, dem.latlon@extent@ymax)
+  osm.extend <- corner_bbox(dem.latlon$xmin,dem.latlon$ymin,dem.latlon$xmax, dem.latlon$ymax)
   
   # download all osm data inside this area, note we have to declare the api interface with source
   osm <- get_osm(osm.extend, source = osmsource_api())

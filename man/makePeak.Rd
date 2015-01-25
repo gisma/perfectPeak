@@ -5,10 +5,10 @@
 \title{Wrapper function that perform some morphometric Digital Elevation Model
 (DEM) analysis to generate a set of reliable peaks.}
 \usage{
-makePeak(DEMfname,iniparam,myenv)
+makePeak(fname.DEM,iniparam,myenv)
 }
 \arguments{
-\item{DEMfname}{name of georeferenced DEM data in GDAL format}
+\item{fname.DEM}{name of georeferenced DEM data in GDAL format}
 
 \item{iniparam}{the full set of params as provided initEnvironGIS(). please look into the INI file for further settings of the makePEak() mode and special settings.
 peak.mode
@@ -39,15 +39,17 @@ name these unknown peaks. For further information look in the reference section 
 \examples{
 #### Example to makePeaks in a specified ROI and
  #### create a dataframe containing coordinates, altitude and name and corresponding parameters
+# assign file names
+ini.demo=system.file("data","demo.ini", package="perfectPeak")
+dem.demo=system.file("data","test.asc", package="perfectPeak")
 
-ini.example=system.file("demo.ini", package="perfectPeak")
-dem.example=system.file("test.asc", package="perfectPeak")
 # get ini params and myenv
-tmp<-initEnvironGIS(ini.example,dem.example)
+tmp<-initEnvironGIS(ini.demo,dem.edemo)
 ini<-tmp$ini
 myenv<-tmp$myenv
+#define traget projection
 target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
-peak.list=makePeak(DEMfname=dem.example,iniparam=ini,myenv=myenv)
+peak.list=makePeak(fname.DEM=dem.demo,iniparam=ini,myenv=myenv)
 peak.list
 }
 \author{

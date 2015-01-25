@@ -2,7 +2,7 @@
 #'@title Parse an Windows like ini file to get the the entries
 #'@description  Any Windows type ini file will be parsed so that the sections and the variables may be used within R for all kind of settings.
 #'
-#'@usage iniParse(fname)
+#'@usage iniParse(fname.control)
 #'@author Gabor Grothendieck <ggrothendieck at gmail.com>,  
 #' \cr
 #' \emph{Maintainer:} Chris Reudenbach \email{giswerk@@gis-ma.org}
@@ -10,7 +10,7 @@
 #'@references \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
 #'            \url{https://stat.ethz.ch/pipermail/r-help/2007-June/134115.html}
 #' 
-#'@param fname file name of the ASCII INI file
+#'@param fname.control file name of control input file
 #'
 #'@return iniParse returns a list ordered by sections variablenames and values 
 #'
@@ -23,9 +23,9 @@
 #' iniParse(ini.example)
 
 
-iniParse <- function(fname)
+iniParse <- function(fname.control)
 {
-  ini.file <- file(fname)
+  ini.file <- file(fname.control)
   Lines  <- readLines(ini.file)
   close(ini.file)
   
