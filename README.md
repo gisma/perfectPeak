@@ -1,14 +1,19 @@
-# perfectPeak
-----
-## The perfect peak
+# The perfect peak
 
-Actually we need an straightforward example for using GIS software. A very nice and apparently simple one is the idea that one is able to calculate a value of **independence** for any mountain. This means more ore less a ranking of perfect peaks. What is the background? Christian Rauch has written an article in the magazine of the German Alpine Club (DAV) to give a solution of this burning problem of most of the mountaineers \cite{Rauch2012}. 
+## Background
+This package is the based on the master course in geographical information systems at the Marburg Geography.  Actually there was a need for a straightforward example of spatial thinking & GI science. This was combined with a typical  all days spatial problem. What is the background? Christian Rauch has written an [article](http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html) in the magazine of the German Alpine Club  to give a solution of this burning problem of most of the mountaineers.
 
-It seems to be a simple approach but then it turns out into a almost arbitrarily complex spatial problem. And very suitable for our needs it is not charged with any scientific claims. So we will start and try to understand the problem.
+## Spatial Thinking...
+The basic idea of the article is, that one is able to calculate a so called value of **independence**  (Eigenstaendigkeit) for any mountain. This calculates more ore less a ranking of //perfect peaks//.  It seems to be a simple approach but then it turns out into a almost arbitrarily complex spatial problem. And very suitable for our needs it is not charged with any scientific claims. So we will start and try to understand the problem.
 
-The perfectPeak package is the implementation of the different algorithms in R. 
+## versus learning a scripting language
+Obviously the //perfectPeak// package is implemented in R. Nevertheless it is neither written as an //generic// R package nor it wan't to teach good programming techniques. If you focus it technically it is an example of how integrate GIS functionality from external software. It shows commandline and API calls as well as the integration of several R wrapper packages that provides a more sophisticated use of these functionality. 
+
+But more likely it is the attempt help non programmers to link spatial thinking with an straightforward but effective approach to implement and apply their algorithms with the chunks of great open source software that is available. 
 
 Find further information at:
 
 [Marburg Open Courseware - Advanced GIS](http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description)
+
+Rauch. C. (2012): [Der perfekte Gipfel](http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html).  Panorama, 2/2012, S. 112.
 
