@@ -9,7 +9,7 @@ The basic idea of the article is, that one is able to calculate a so called valu
 ## ... learning a scripting language
 Obviously the *perfectPeak* package is implemented in R. Nevertheless it is neither written as an *generic* R package nor it want's to be a course in scripting techniques. If one focus it technically, it is an example of how to use R for the integration of GIS functionality from external software and Desktop GIS. It shows commandline and API calls as well as the powerful integration of some major spatial R wrapper packages. 
 
-But more likely it is the attempt to support *non programmers* diving into spatial thinking and getting a straightforward but nevertheless effective approach to implement and apply their concepts using in a most simple way the capabilities of the great open source software that is available. 
+But more likely it is the attempt to support *non programmers* diving into spatial thinking and getting a straightforward but nevertheless effective approach to implement and apply their concepts using the advanced capabilities of the great and growing GI open source software that is available out there. 
 
 ## References
 Find further information at:
