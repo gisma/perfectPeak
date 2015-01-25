@@ -1,8 +1,9 @@
 #' Demo Digital Elevation Model DEM
 #'
 #' The example Digital Elevation Model DEM is taken from the Authority of Tirol
-#' it is dervied from LIDAR data and can downloaded for Tirol. The demo data is a tile
-#' with  the following extent:  xmin 11.35547, xmax 11.40009, ymin 47.10114, ymax 47.13512
+#' it is dervied from LIDAR data and can downloaded for Tirol. 
+#' The demo data is an Arc ASCII Grid with 324 cols by 360 rows and the following extent:
+#' lon_min 11.35547, lon_max 11.40009, lat_min 47.10114, lat_max 47.13512
 #'
 #' \itemize{
 #'   \item resolution : 10 Meter,10 Meter

@@ -55,6 +55,7 @@ The example control file provides all necessary settings for using the perfectPe
   \item T_CURVE_MIN=0.00000001
   \item T_CURVE_MAX=0.001
 }
+
 \itemize{
   \item [SysPath]             SYSPAth for Linux and Windows
   \item wossaga='C:/MyApps/GIS_ToGo/QGIS_portable_Chugiak_24_32bit/QGIS/apps/saga'
