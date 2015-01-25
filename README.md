@@ -7,9 +7,9 @@ This package is developed during the Advanced GIS course which is an [regular co
 The basic idea of the article is, that one is able to calculate a so called value of *independence*  (Eigenstaendigkeit) for any mountain or summit. This results in a rank list of *perfect peaks*. In the beginning it seems to be a pretty simple question, but step by step it turns out into a almost arbitrarily complex spatial problem. And very suitable for our needs it is not charged with any scientific claims. So we will start and try to understand the problem.
 
 ## ... learning a scripting language
-Obviously the *perfectPeak* package is implemented in R. Nevertheless it is neither written as an *generic* R package nor it wan't to be a course in scripting techniques. If you focus it technically it is an example of how integrate GIS functionality from external software. It shows commandline and API calls as well as the integration of several R wrapper packages that provides a more sophisticated use of these functionality. 
+Obviously the *perfectPeak* package is implemented in R. Nevertheless it is neither written as an *generic* R package nor it want's to be a course in scripting techniques. If one focus it technically, it is an example of how to use R for the integration of GIS functionality from external software and Desktop GIS. It shows commandline and API calls as well as the powerful integration of some major spatial R wrapper packages. 
 
-But more likely it is the attempt help non programmers to link spatial thinking with an straightforward but effective approach to implement and apply their algorithms with the chunks of great open source software that is available. 
+But more likely it is the attempt to support *non programmers* diving into spatial thinking and getting a straightforward but nevertheless effective approach to implement and apply their concepts using in a most simple way the capabilities of the great open source software that is available. 
 
 ## References
 Find further information at:

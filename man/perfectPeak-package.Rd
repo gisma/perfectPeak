@@ -24,7 +24,6 @@ LazyLoad: \tab yes\cr
 #'}
 }
 
-}
 \author{
 Chris Reudenbach
 

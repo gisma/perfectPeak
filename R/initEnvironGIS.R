@@ -32,7 +32,6 @@ initEnvironGIS <- function(fname,DEMfname){
                "RSAGA","rgeos","gdata","Matrix","igraph",
                "rgdal","gdistance", "spgrass6", "gdalUtils")
   
-  
   # Install CRAN packages (if not already installed)
   inst <- libraries %in% installed.packages()
   if(length(libraries[!inst]) > 0) install.packages(libraries[!inst])
@@ -42,44 +41,18 @@ initEnvironGIS <- function(fname,DEMfname){
   
   # get environment
   ini<-iniParse(fname)  
-  # (R) define working folder 
+  
+  # (R) assign local vars for working folder 
   root.dir <- ini$Pathes$workhome               # project folder 
   working.dir <- ini$Pathes$runtimedata         # working folder 
   
-  ### set up of the correct projection information
+  ### assign correct projection information
   # To derive the correct proj.4 string for Austria MGI (EPSG:31254) is very NOT straightforward
-  # due to the fact that the datum transformation from WGS84 to Bessel has to meet the data 
-  # the implemented Transformation Parameters is a translation for "Hermannskogel" 
-  # that means  '+ellps=bessel +towgs84=653.0,-212.0,449.0'
-  #
-  # Unfortunately this is not the best fitting transformation parameter set for the Tirol DEM data.
-  # if you look at qgis or at spatialreference.org you will find that
-  # +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 (Helmert) works best
-  #
-  # So we have to workaround. We take the basic string as derived from the make_EPSG() function
-  # this is without +towgs84 parameters (EPSG Code rarely provides the +towgs84 parameters due to authorithy 'problems') 
-  # and paste then the correct +towgs84 string
-  # we can take it from the internal proj.4 EPSG function list using make_EPSG()
-  # NOTE This is an example for AUSTRIA EPSG31254 
-  # bessel.helmert.towgs84    <-'+towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232'
-  # bessel.molodensky.towgs84 <-'+towgs84=653.0,-212.0,449.0'
-  ## this option will generate the same basic string but WITH the bessel.molodensky.towgs84 parameter set
-  ## unfortunately this is not correct for the used Tirol-DEM data
-  # target.proj4<-as.character(CRS(paste0("+init=epsg:",epsg.code)))
-  ### WORKAROUND
-  # we generate the internal proj.4 EPSG dataframe 
-  ##df.epsg <- make_EPSG()
-  # by using 'grep' and the epsg.code 
-  # NOTE this provides the basic string without +towgs84 therefore we add the correct helmert.towgs84 transformation
-  ##target.proj4<-as.character(paste(df.epsg[grep(epsg.code, df.epsg$code),3],helmert.towgs84))
-  #### for better understanding of this special case
-  # you may want to dive in the wild field of confusion corresponding to projection issues starting here:
-  # https://stat.ethz.ch/pipermail/r-sig-geo/2009-July/006058.html 
-  
-  # projection of the data as provided by the meta data  
+  # please refer to: http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:code-examples:ag-ce-09-01
+  # taget EPSG code
   epsg.code<-ini$Projection$targetepsg
   
-  # we take the corrrect string from the ini file
+  # target projection (actually the projection of the DEM)
   target.proj4<-ini$Projection$targetproj4
   
   # we will also need the  basic latlon wgs84 proj4 string
@@ -148,5 +121,3 @@ initEnvironGIS <- function(fname,DEMfname){
   names(result)=c('ini','myenv')
   return (result)  
 }
-
-
