@@ -295,27 +295,28 @@ makePeak <- function(DEMfname,iniparam,myenv,int=TRUE){
     writePointsShape(SP,"DEMpeaklist.shp")    
     
     if (ext.peak=='harry') {
-      harry<-extractHarry(dem.latlon,latlon.proj4,target.proj4)
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,harry)}
+      if(merge==1){df<-distMergePeaks(SP,extractHarry(dem.latlon,latlon.proj4,target.proj4))}
       # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,harry,dem,domthres)}
+      if(merge==2){df<-costMergePeaks(SP,extractHarry(dem.latlon,latlon.proj4,target.proj4),dem,domthres)}
     }
     else if (ext.peak=='osm') {
-           print('not implemented external peak data input')
-           }
+      # call distance based merging of the peaks
+      if(merge==1){df<-distMergePeaks(SP,extractOSMPoints(dem.latlon,latlon.proj4,target.proj4))}
+      # call cost based merging of the peaks
+      if(merge==2){df<-costMergePeaks(SP,extractOSMPoints(dem.latlon,latlon.proj4,target.proj4),dem,domthres)}
+    }
            else {print('not implemented external peak data input')}
            }
     else {stop("not implemented yet")}
   SP<-df
-  
   ### write to shape for control purpose
   # make it spatial
   coordinates(SP) <- ~xcoord+ycoord
   # set the projection
   proj4string(SP) <- target.proj4
   # write shapefile
-  writePointsShape(SP,"DEMdist.shp")    
+  writePointsShape(SP,"MergePeaks.shp")    
 
 # return merged peak data frames for common use
   return(df)

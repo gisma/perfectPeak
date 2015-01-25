@@ -28,7 +28,7 @@
 initEnvironGIS <- function(fname,DEMfname){
   
   # check for packages and if necessary install libs 
-  libraries<-c("downloader","sp","raster","maptools",
+  libraries<-c("downloader","sp","raster","maptools","osmar",
                "RSAGA","rgeos","gdata","Matrix","igraph",
                "rgdal","gdistance", "spgrass6", "gdalUtils")
   
