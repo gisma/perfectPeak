@@ -39,7 +39,7 @@ distMergePeaks<- function(dem.peaklist,ext.peaklist){
   newdp<-dp[apply(dist,1,which.min),]
   
   # apply the corresponding names
-  newdp$name<-ep$df.sub.Name
+  newdp$name<-ep$name
   
   # return the dataframe
   return(newdp)

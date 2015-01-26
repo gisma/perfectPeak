@@ -26,12 +26,13 @@ You can use the function as it is or alternatively use it as skeleton control
 script that you cab adapt to your needs.
 }
 \examples{
-#### Example to use Rpeak for a common analysis run
+#### Example to use Rpeak for a common analysis of the
+    dominance, prominenece and independence values of an specifified area
 
-# You obligatory need a georeferenced DEM (GDAL format) as data input.
-Except the origin georefence all parameters are read from the demo.ini
-file. You will find some more comments in the file. NOTE the real projection of
-the DEM has to meet the projection string in the ini file
+# You need a georeferenced DEM (GDAL format) as data input.
+# All parameters are read from the control INI file - use the 'demo.ini' as a template
+# NOTE the existing projection of the data file has to be exactly the same
+# as provided in target.proj4  variable in the ini file
 
 
 ini.example=system.file("data","demo.ini", package="perfectPeak")
@@ -49,9 +50,6 @@ Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www
 Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}
 }
 \seealso{
-Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112.
-Leonhard, W. (2012): Eigenständigkeit von Gipfeln. -
-
 \code{\link{initEnvironGIS}}, \code{\link{calculateDominance}},
 \code{\link{calculateProminence}}, \code{\link{calculateEValue}},
 \code{\link{makePeak}},
