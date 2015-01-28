@@ -2,7 +2,7 @@
 #'
 #'@title Retrieves online geodata and converts it to raster/sp objects
 #'
-#'@description Downloads some geodatasets and and converts them in raster or spatial objects . The data is downloaded if necessary and then read from these files into raster objects. The function \code{\link{ccodes}} returns country names and the ISO codes. the original fuction from Robert J. Hijmans was slightly adapted and is now providing more datasets
+#'@description Downloads some geodatasets and and converts them in raster or spatial objects . The data is downloaded if necessary and then read from these files into raster objects. The function \code{\link{ccodes}} returns country names and the ISO codes. Based on the raster package getData function from Robert J. Hijmans it provides more global and regional geodata
 #' 
 #'@usage getGeoData(name, download=TRUE, path='', ...)
 #' ccodes()
@@ -11,7 +11,7 @@
 #'@param download Logical \code{TRUE} data will be downloaded if not locally available
 #'@param path Character Path name indicating where to store the data. Default is the current working directory 
 #'@param ... Additional required (!) parameters. These are data set specific. See Details
-#'@author Robert J. Hijmans, Contributions from Chris Reudenbach 
+#'@author Robert J. Hijmans 
 #' \cr
 #' \emph{Maintainer:} Chris Reudenbach \email{giswerk@@gis-ma.org}
 #'
@@ -24,31 +24,31 @@
 #' \code{countries} has polygons for all countries at a higher resolution than the 'wrld_simpl' data\cr in the maptools pacakge . \cr
 #' \code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits\cr
 #' \code{OSMp} is the OSM Point Data from the current OSM database\cr
-#' \code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol\cr
+#' \code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol. For Copyright and further information  see: \link{DEM}\cr
 #'
 
 
 
 #'If  \code{name}='alt' or \code{name}='GADM' you must provide a 'country=' argument. Countries are specified by their 3 letter ISO codes. Use getData('ISO3') to see these codes. In the case of GADM you must also provide the level of administrative subdivision (0=country, 1=first level subdivision). In the case of alt you can set 'mask' to FALSE. If it is TRUE values for neighbouring countries are set to NA. For example:\cr
-#'\itemize{
-#'     \item{\code{getGeoData('GADM', country='FRA', level=1)}}\cr
-#'     \item{    \code{getGeoData('alt', country='FRA', mask=TRUE)}}}\cr
+#'     \code{getGeoData('GADM', country='FRA', level=1)}\cr
+#'     \code{getGeoData('alt', country='FRA', mask=TRUE)}\cr
+#' \cr
 #'If  \code{name}='SRTM' you must provide 'lon' and 'lat' arguments (longitude and latitude). These should be single numbers somewhere within the SRTM tile that you want.\cr
-#'\itemize{\item{\code{getGeoData('SRTM', lon=5, lat=45)}}}\cr
+#'    \code{getGeoData('SRTM', lon=5, lat=45)}\cr
+#' \cr
 #'If  \code{name}='worldclim' you must also provide a variable name 'var=', and a resolution 'res='. Valid variables names are 'tmin', 'tmax', 'prec' and 'bio'. Valid resolutions are 0.5, 2.5, 5, and 10 (minutes of a degree). In the case of res=0.5, you must also provide a lon and lat argument for a tile; for the lower resolutions global data will be downloaded. In all cases there are 12 (monthly) files for each variable except for 'bio' which contains 19 files.\cr
-#'\itemize{
-#'     \item{\code{getGeoData('worldclim', var='tmin', res=0.5, lon=5, lat=45)}} \cr
-#'     \item{\code{getGeoData('worldclim', var='bio', res=10)}}}\cr
+#'    \code{getGeoData('worldclim', var='tmin', res=0.5, lon=5, lat=45)} \cr
+#'    \code{getGeoData('worldclim', var='bio', res=10)}\cr
+#' \cr
 #'If  \code{name=}'harrylist' you will download and clean the complete list\cr
-#'\itemize{
-#'      \item{\code{getGeoData('harrylist')}}}\cr
+#'    \code{getGeoData('harrylist')}\cr
+#' \cr
 #'If  \code{name}='OSMp' you must provide lat_min,lat_max,lon_min,lon_max for the boundig box. Additionally you must set  the switch 'all' to \code{FALSE} if you just want to download a specified item. Then you have to  provide the content of the desired items in the 'key' and 'val' argument. According to this combination you have to provide a tag list containing the Tags of the element c('name','ele').\cr
-#'\itemize{
-#'      \item{\code{getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='peak',taglist=c('name','ele'))}}}\cr
+#'    \code{getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='peak',taglist=c('name','ele'))}\cr
+#' \cr
 #'If  \code{name}='tiroldem' you must set the switch 'all' to \code{FALSE} if you just want to download a specified item you have to set data=item. The list of allowd items is: \code{ibk_10m} Innsbruck, \code{il_10m} Innsbruck Land, \code{im_10m} Imst, \code{kb_10m} Kitzbühl, \code{ku_10m} Kufstein, \code{la_10m} Landeck, \code{re_10m} Reutte, \code{sz_10m} Schwaz, \code{lz_10m} Lienz (Osttirol). The data is correctly georeferenced. However you MUST use the following proj4 strings if you want to project other data acccording to the Austrian Datum. DO NOT USE the default EPSG Code string! All datasets except Lienz are projected with: ''+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326, 90.129, 463.919, 5.137, 1.474, 5.297, 2.4232 +units=m'. Item=lz_10m (Lienz) has an different 
 #' Central_Meridian. You have to change it to 13.333333.\cr
-#'\itemize{
-#'      \item{\code{getGeoData('tiroldem', data='ku_10m')}}} \cr
+#'    \code{getGeoData('tiroldem', data='ku_10m')} \cr
 #'
 #'@references
 #'\url{http://www.worldclim.org}

@@ -44,7 +44,7 @@ NULL
 #'         
 #' @docType data
 #' @keywords datasets
-#' @name input.DEM
+#' @name DEM
 #' @usage raster('stubai.asc')
 #' @format Arc ASCII Grid
 NULL
@@ -109,7 +109,7 @@ NULL
 #'         
 #' @docType data
 #' @keywords datasets
-#' @name input.INI
+#' @name INI
 #' @usage iniparse('demo.ini')
 #' @format Windows style INI file
 NULL
