@@ -82,10 +82,10 @@ final.peak.list<-makePeak(fname.DEM=dem.in,iniparam=ini,myenv=myenv,extent=exten
 # do it for each peak 
 for (i in 1: nrow(final.peak.list)){
   # we want to know at least the prominence of the highest peak
-  final.peak.list[i,5]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+  final.peak.list[i,6]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
   # i>1 because the highest peak is relative reference point so dominance and independence is not computable 
   if (i>1){
-    final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+    final.peak.list[i,5]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
     final.peak.list[i,7]<-calculateIndependence(final.peak.list[i,])
   }}
 

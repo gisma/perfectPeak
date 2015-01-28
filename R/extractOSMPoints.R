@@ -34,17 +34,16 @@
 #' ini.example=system.file("data","demo.ini", package="perfectPeak") 
 #' dem.example=system.file("data","test.asc", package="perfectPeak")      
 #' ini<-initEnvironGIS(ini.example,dem.example)
-#' key="natural"
-#' val="peak"
-#' extractOSMPoints(ini,k,v)
+#' extractOSMPoints(ini,key="natural",val="peak",taglist=c('name','ele'))
 #' 
 
-extractOSMPoints <- function(ini,key="natural",val="peak"){
+extractOSMPoints <- function(ext,ini,key="natural",val="peak",taglist=c('name','ele')){
   
-  ext<-ini$extent
-  target.proj4<-ini$ini$Projection$targetproj4
+  target.proj4<-ini$Projection$targetproj4
   # define the spatial extend of the OSM data we want to retrieve
   osm.extend <- corner_bbox(ext$xmin,ext$ymin,ext$xmax, ext$ymax)
+  # use the download.file function to access online content. note we change already the filename and 
+  # we also pass the .php extension of the download address
   
   # download all osm data inside this area, note we have to declare the api interface with source
   print('Retrieving OSM data. Be patient...')
@@ -61,25 +60,28 @@ extractOSMPoints <- function(ini,key="natural",val="peak"){
   
   # now we need to extract the corresponding variables and values separately
   # create sub-subsets of the tags 'name' and 'ele' and attrs 'lon' , 'lat'
-  .name <- subset(.sub$nodes$tags,(k=='name' ))
-  .alt <- subset(.sub$nodes$tags,(k=='ele' ))
-  .coords <- subset(.sub$nodes$attrs[c('id',"lon", "lat")],)
-  # merge the data into a consistent data frames
-  .tmp<- merge(.name,.coords, by="id",all.x=TRUE)
-  .merge<- merge(.tmp,.alt, by="id",all.x=TRUE)
+  
+  .coords<- subset(.sub$nodes$attrs[c('id',"lon", "lat")],)
+  names(.coords)<-c('id','xcoord','ycoord')
+  i=1   
+  for(elements in taglist){
+    .tmp<- subset(.sub$nodes$tags,(k==elements ))[,-2]
+    names(.tmp)[2]<-elements
+    if (i==1){
+      .stmp<- merge(.coords,.tmp, by="id",all.x=TRUE)
+      i=i+1
+    }else{
+      .stmp<- merge(.stmp,.tmp, by="id",all.x=TRUE)
+    }
+  }
   
   # clean the df and rename the cols
-  m.df <- .merge[c('lon','lat','v.x','v.y')]
-  colnames(m.df) <- c('lon','lat','name','altitude')
-  
-  # convert the lat,lon,altitude values from level to numeric
-  m.df$altitude<-as.numeric(as.character(m.df$altitude))
-  m.df$lon<-as.numeric(as.character(m.df$lon))
-  m.df$lat<-as.numeric(as.character(m.df$lat))
+  m.df<-.stmp
   
   # convert the osm.peak df to a SpatialPoints object and assign reference system
-  coordinates(m.df) <- ~lon+lat
-  proj4string(m.df)<-"+proj=longlat +datum=WGS84"
+  coordinates(m.df) <- ~xcoord+ycoord
+  proj4string(m.df)<-"+proj=longlat +datum=WGS84"  
+  
   # project the  SpatialPoints from geographical coordinates to target projection
   m.df<-spTransform(m.df,CRS(target.proj4))
   

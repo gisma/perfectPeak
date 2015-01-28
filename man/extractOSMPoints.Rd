@@ -38,9 +38,7 @@ LazyLoad: \tab yes\cr
 ini.example=system.file("data","demo.ini", package="perfectPeak")
 dem.example=system.file("data","test.asc", package="perfectPeak")
 ini<-initEnvironGIS(ini.example,dem.example)
-key="natural"
-val="peak"
-extractOSMPoints(ini,k,v)
+extractOSMPoints(ini,key="natural",val="peak",taglist=c('name','ele'))
 }
 \author{
 Chris Reudenbach

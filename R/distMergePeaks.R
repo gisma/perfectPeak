@@ -1,6 +1,6 @@
 #'@name distMergePeaks
 #'@title Trys to merge indenpendent peak positions to provide a reliable join of different data sources
-#'@description  
+#'@description  Two list of coordinates and altitudes are compared.
 #' http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description
 #'
 #'@usage distMergePeaks(dem.peaklist,ext.peaklist)

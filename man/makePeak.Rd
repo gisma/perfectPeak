@@ -3,7 +3,7 @@
 \name{makePeak}
 \alias{makePeak}
 \title{Wrapper function that perform some morphometric Digital Elevation Model
-(DEM) analysis to generate a set of reliable peaks.}
+(DEM) analysis to generate a set of morphometric and in realreliable peaks}
 \usage{
 makePeak(fname.DEM,iniparam,myenv)
 }
@@ -35,6 +35,9 @@ estimation of prominence and dominance analysis fileterd. If you choose this app
 names of external data like Hattys Bergliste or the OSM data are merged to the generic
 DEM peaks. Additionally external point data from several sources can be used to
 name these unknown peaks. For further information look in the reference section and the INI file.
+}
+\details{
+coming soon
 }
 \examples{
 #### Example to makePeaks in a specified ROI and

@@ -1,6 +1,6 @@
 #'@name makePeak
 #'@title Wrapper function that perform some morphometric Digital Elevation Model 
-#'(DEM) analysis to generate a set of reliable peaks.
+#'(DEM) analysis to generate a set of morphometric and in realreliable peaks 
 #'
 #'@description 
 #' Currently two different approaches are available. First a simple approach using a filtered 
@@ -10,6 +10,8 @@
 #' names of external data like Hattys Bergliste or the OSM data are merged to the generic
 #' DEM peaks. Additionally external point data from several sources can be used to 
 #' name these unknown peaks. For further information look in the reference section and the INI file.
+#'@details
+#' coming soon
 #' 
 #'@usage makePeak(fname.DEM,iniparam,myenv)
 #'@author Chris Reudenbach 
@@ -150,10 +152,10 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     colnames(df)=c("xcoord","ycoord","altitude")
     # (R) sort by altitude
     df<-df[order(df$altitude, decreasing=TRUE),]
-    # (R) add required cols
+    # add required cols
+    df['name'] <-NA
     df['dominance'] <-NA
     df['prominence'] <-NA
-    df['name'] <-NA
     df['independence'] <-NA
     write.table(df,peak.list,row.names=F)
   }  
@@ -184,11 +186,12 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     peak.area<-reclassify(peak.area, c(0,5,0, 5.1,7,1 ))
     
     if (make.peak.mode==3){
-    # Calculate Jochen Schmidt's fuzzy landforms (https://faculty.unlv.edu/buckb/GEOL%20786%20Photos/NRCS%20data/Fuzz/felementf.aml) fuzzylandoforms are:  
+    # calculate Jochen Schmidt's fuzzy landforms (https://faculty.unlv.edu/buckb/GEOL%20786%20Photos/NRCS%20data/Fuzz/felementf.aml) fuzzylandoforms are:  
+    # using SAGA 'ta_morphometry',"Fuzzy Landform Element Classification" The result is classified as follows:
     # PLAIN     , 100  # PIT       , 111  # PEAK      , 122  # RIDGE     , 120  # CHANNEL   , 101	
     # SADDLE    , 121	# BSLOPE    ,   0	# FSLOPE    ,  10	# SSLOPE    ,  20	# HOLLOW    ,   1	
     # FHOLLOW   ,  11	# SHOLLOW   ,  21	# SPUR      ,   2	# FSPUR     ,  12	# SSPUR     ,  22	
-    # wood SIZE=9,TOL_SLOPE=10.000000,TOL_CURVE=0.00001,EXPONENT=0.000000,ZSCALE=1.000000 
+    # NOTEwood SIZE=9,TOL_SLOPE=10.000000,TOL_CURVE=0.00001,EXPONENT=0.000000,ZSCALE=1.000000 
     # fuzzy SLOPETODEG='0',T_SLOPE_MIN=0.0000001,T_SLOPE_MAX=20.000000,T_CURVE_MIN=0.00000001,T_CURVE_MAX=0.0001))
     # generates the same peaks
     rsaga.geoprocessor('ta_morphometry',"Fuzzy Landform Element Classification",env=myenv,
@@ -209,7 +212,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     peak.area<-raster('mp_fuzzylandform.sdat')
     # we have to reassign correct projection due to some troubles in twgs84 transformations
     crs(peak.area)<-target.proj4
-    # reclassify fuzzylandforms to binary peak mask
+    # reclassify fuzzylandforms to get a binary peak mask
     peak.area<-reclassify(peak.area, c(0,121,0, 121.1,123,1 ))
     
     }
@@ -240,52 +243,40 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
       coord <- xyFromCell(dem, i[id_max, 1])
       # put  it in a data frame
       df_coord <- data.frame(coord, val_max)
-      # and make it spatial
       # set the xy coordinates
       coordinates(df_coord) <- ~x+y
       # set the projection
       proj4string(df_coord) <- target.proj4
       return(df_coord)
     })
-    # merge it and stuff it in a data.frame
+    # merge and stuff it in a data.frame
     df<- as.data.frame(do.call("rbind", ls_spdf_max))    
     
     # name the cols
     colnames(df)=c("xcoord","ycoord","altitude")
-    
     # sort by altitude
     df<-df[order(df$altitude, decreasing=TRUE),]
-    
     # add required cols
+    df['name'] <-NA
     df['dominance'] <-NA
     df['prominence'] <-NA
-    df['name'] <-NA
     df['independence'] <-NA
-    
+    write.table(df,peak.list,row.names=F)    
     # duplicate dataframe
     final.peak.list<-df
-    
-#    # make df spatial
-#    coordinates(df)<- ~xcoord+ycoord
-#    # set the projection
-#    proj4string(df)<- target.proj4
-#    # export shape file
-#    writePointsShape(df,"DEMpeaklist.shp") 
-  
-    # getting resolution of dem for some suppress dominance smaller than the 3*res
-    #res<-2*(dem@extent@xmax-dem@extent@xmin)/dem@ncols
-    
+
     # calculate dominance and prominence
     # as a first estimate to reduce the peaklist to more 'true' peaks 
     for (i in 1: nrow(final.peak.list)){
       # call calculate functions and put retrieved value into the corresponding dataframe field
-      final.peak.list[i,4]<-9999
+      final.peak.list[i,5]<-9999
       if (i>1){
-        final.peak.list[i,4]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+        final.peak.list[i,5]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
         }}
     # put result in fp
     fp<-final.peak.list
-    # make a subset  with the tresholds as derived by the ini file for dom and prom
+    # make a subset  with the tresholds as derived by the ini file for dominance
+    # because the list is sorted higher peak will "mask" lower pweaks n their neighborhood
     final.peak.list<-subset(fp,fp$dominance > domthres  )
     # duplicate it 
     SP<-final.peak.list
@@ -294,22 +285,27 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     # set the projection
     proj4string(SP) <- target.proj4
     writePointsShape(SP,"DEMpeaklist.shp")    
-    
+
+
     if (ext.peak=='harry') {
+      XHP<-extractHarry(extent,latlon.proj4,target.proj4)
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,extractHarry(extent,latlon.proj4,target.proj4))}
+      if(merge==1){df<-distMergePeaks(SP,xHP)}
       # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,extractHarry(extent,latlon.proj4,target.proj4),dem,domthres)}
+      if(merge==2){df<-costMergePeaks(SP,XHP,dem,domthres)}
     }
     else if (ext.peak=='osm') {
+      XOP<-extractOSMPoints(extent,iniparam)
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,extractOSMPoints(extent,latlon.proj4,target.proj4))}
+      if(merge==1){df<-distMergePeaks(SP,XOP)}
       # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,extractOSMPoints(extent,latlon.proj4,target.proj4),dem,domthres)}
+      if(merge==2){df<-costMergePeaks(SP,XOP,dem,domthres)}
     }
            else {print('not implemented external peak data input')}
            }
     else {stop("not implemented yet")}
+  
+  names(df)<-c('xcoord', 'ycoord', 'altitude', 'name','dominance', 'prominence','independence')
   SP<-df
   ### write to shape for control purpose
   # make it spatial

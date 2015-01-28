@@ -15,6 +15,7 @@ distMergePeaks(dem.peaklist,ext.peaklist)
 distMergePeaks returns one merged peaklist with the names of the external peaks and the coords and altitude from the DEM derived list
 }
 \description{
+Two list of coordinates and altitudes are compared.
 http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description
 }
 \examples{

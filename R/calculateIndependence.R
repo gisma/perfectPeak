@@ -36,8 +36,8 @@
 
 calculateIndependence <- function(peaklist){
   alt<-peaklist[3]
-  dom<-peaklist[4]
-  prom<-peaklist[5]
+  dom<-peaklist[5]
+  prom<-peaklist[6]
   
   term1 = log2(alt/8848)   # 8848 Mt. Everest max reference height
   term2 = log2(dom/100000) # 100 km buffer radius of curent peak
