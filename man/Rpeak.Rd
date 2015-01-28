@@ -13,7 +13,7 @@ Rpeak(fname.control,fname.DEM)
 \item{fname.DEM}{name Digtial Elevation Model has to be a GDAL raster file}
 }
 \value{
-Rpeak returns the complete list as a dataframe of all parameters and results and
+peaklist with ycoord ycoord,altitude,dominance,prominence,independence name
 generates some output (maps and tables)
 }
 \description{

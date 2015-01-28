@@ -28,7 +28,7 @@ Downloads some geodatasets and and converts them in raster or spatial objects . 
 \code{worldclim} is a database of global interpolated climate data. \cr
 \code{SRTM} refers to the hole-filled CGIAR-SRTM (90 m resolution). \cr
 \code{countries} has polygons for all countries at a higher resolution than the 'wrld_simpl' data\cr in the maptools pacakge . \cr
-\code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits\cr
+\code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr
 \code{OSMp} is the OSM Point Data from the current OSM database\cr
 \code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol. For Copyright and further information  see: \link{DEM}\cr
 

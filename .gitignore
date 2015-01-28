@@ -1,3 +1,10 @@
 .Rproj.user
 .Rhistory
 .RData
+OSMNode.dbf
+OSMNode.shp
+OSMNode.shx
+Prominence_Values
+p.kml
+p__name__.kml
+stubai.geojson

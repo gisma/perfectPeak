@@ -11,6 +11,7 @@
 #'
 #'@author Chris Reudenbach 
 #'
+#'@details For Further Information look at:\link{INI}
 #'
 #'@return initEnvironGIS initializes the usage of the GIS packages and other utilities
 #'@export initEnvironGIS
@@ -30,7 +31,8 @@ initEnvironGIS <- function(fname.control,fname.DEM){
   # check for packages and if necessary install libs 
   libraries<-c("downloader","sp","maptools","osmar",
                "RSAGA","rgeos","gdata","Matrix","igraph",
-               "rgdal","gdistance", "spgrass6", "gdalUtils","raster")
+               "rgdal","gdistance","OpenStreetMap","spgrass6", 
+               "gdalUtils","raster","plotKML","maps","ggplot2")
   
   # Install CRAN packages (if not already installed)
   inst <- libraries %in% installed.packages()

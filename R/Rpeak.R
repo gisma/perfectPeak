@@ -22,7 +22,7 @@
 #' Rauch. C. (2012): Der perfekte Gipfel.  Panorama, 2/2012, S. 112 \url{http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html}\cr
 #' Leonhard, W. (2012): Eigenständigkeit von Gipfeln.\url{http://www.thehighrisepages.de/bergtouren/na_orogr.htm}\cr
 #' 
-#'@return Rpeak returns the complete list as a dataframe of all parameters and results and 
+#'@return peaklist with ycoord ycoord,altitude,dominance,prominence,independence name 
 #' generates some output (maps and tables)
 #'
 #'@seealso
@@ -107,4 +107,5 @@ file.remove(list.files(file.path(root.dir, working.dir), pattern =('mp_'), full.
 file.remove(list.files(file.path(root.dir, working.dir), pattern =('run'), full.names = TRUE, ignore.case = TRUE))
 
 print("That's it")
+return(final.peak.list)
 }
