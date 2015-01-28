@@ -61,7 +61,7 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres){
       }else{cost[i,j]<-NA}
     }}
   # filter for min Value
-  cost.min<-rowMin(cost)
+  cost.min<-apply(cost,1,min)
   # take the original df 
   ep<-as.data.frame(ext.peaklist)
   dp<-as.data.frame(dem.peaklist)

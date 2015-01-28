@@ -28,9 +28,9 @@
 initEnvironGIS <- function(fname.control,fname.DEM){
   
   # check for packages and if necessary install libs 
-  libraries<-c("downloader","sp","raster","maptools","osmar",
+  libraries<-c("downloader","sp","maptools","osmar",
                "RSAGA","rgeos","gdata","Matrix","igraph",
-               "rgdal","gdistance", "spgrass6", "gdalUtils")
+               "rgdal","gdistance", "spgrass6", "gdalUtils","raster")
   
   # Install CRAN packages (if not already installed)
   inst <- libraries %in% installed.packages()

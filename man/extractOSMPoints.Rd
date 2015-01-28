@@ -2,7 +2,7 @@
 % Please edit documentation in R/extractOSMPoints.R
 \name{extractOSMPoints}
 \alias{extractOSMPoints}
-\title{Extract peak position and altitude from Harry's Bergliste}
+\title{Extract peak position and altitude from OSM data}
 \usage{
 extractOSMPoints(dem,current.proj4)
 }
@@ -21,7 +21,7 @@ name \tab name of the peak\cr
 }
 }
 \description{
-The current Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest
+The current OSM data base is cropped for th earea of interest Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest
 }
 \details{
 \tabular{ll}{
@@ -33,12 +33,14 @@ LazyLoad: \tab yes\cr
 }
 }
 \examples{
-#### Example to extract the ROI and
- #### create a dataframe containing coordinates, altitude and name
-
-exampledem=system.file("dem.asc", package="peRfectPeak")
-target.projection<-'+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'
-extractOSMPoints(exampledem,'target.projection')
+#### Example extract OSM nodes from a region of interst (ROI)
+#    create a dataframe containing coordinates, tag-attribute and value
+ini.example=system.file("data","demo.ini", package="perfectPeak")
+dem.example=system.file("data","test.asc", package="perfectPeak")
+ini<-initEnvironGIS(ini.example,dem.example)
+key="natural"
+val="peak"
+extractOSMPoints(ini,k,v)
 }
 \author{
 Chris Reudenbach

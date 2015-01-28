@@ -58,7 +58,7 @@ extractHarry <- function(dem.latlon,latlon.proj4,target.proj4){
   #Now it's getting spatial
   # first we have to assign lat lon geographic coordinates
   harrys.bergliste<-SpatialPointsDataFrame(data.frame(df.sub$Longitude,df.sub$Latitude),data.frame(df.sub$Name,df.sub$Altitude), proj4string = CRS(latlon.proj4))
-
+ 
   # then we project it to MGI
   spTransform(harrys.bergliste,CRS(target.proj4))
   
