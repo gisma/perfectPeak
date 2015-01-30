@@ -66,7 +66,7 @@
 #'
 
 makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
- 
+  
   ### global settings
   # set environment
   # (R) define working folder 
@@ -113,7 +113,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
   
   # (raster) read GDAL data set
   dem<- raster(dem.out)
-
+  
   
   # (1=MinMax) (2=Merged Wood/peaklist, 3= not implemented)
   if (make.peak.mode==1){
@@ -163,7 +163,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
   ### if mode = 2 or 3   
   
   else if (make.peak.mode==2 | make.peak.mode==3){  
-  
+    
     # calculate wood's terrain indices   wood= 1=planar,2=pit,3=channel,4=pass,5=ridge,6=peak
     rsaga.geoprocessor('ta_morphometry',"Morphometric Features",env=myenv,
                        list(DEM='mp_dem.sgrd',
@@ -178,7 +178,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
                             TOL_CURVE=tol.curve,
                             EXPONENT=exponent,
                             ZSCALE=zscale))
-
+    
     
     peak.area<-raster('mp_wood.sdat')
     crs(peak.area)<-target.proj4
@@ -186,35 +186,35 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     peak.area<-reclassify(peak.area, c(0,5,0, 5.1,7,1 ))
     
     if (make.peak.mode==3){
-    # calculate Jochen Schmidt's fuzzy landforms (https://faculty.unlv.edu/buckb/GEOL%20786%20Photos/NRCS%20data/Fuzz/felementf.aml) fuzzylandoforms are:  
-    # using SAGA 'ta_morphometry',"Fuzzy Landform Element Classification" The result is classified as follows:
-    # PLAIN     , 100  # PIT       , 111  # PEAK      , 122  # RIDGE     , 120  # CHANNEL   , 101	
-    # SADDLE    , 121	# BSLOPE    ,   0	# FSLOPE    ,  10	# SSLOPE    ,  20	# HOLLOW    ,   1	
-    # FHOLLOW   ,  11	# SHOLLOW   ,  21	# SPUR      ,   2	# FSPUR     ,  12	# SSPUR     ,  22	
-    # NOTEwood SIZE=9,TOL_SLOPE=10.000000,TOL_CURVE=0.00001,EXPONENT=0.000000,ZSCALE=1.000000 
-    # fuzzy SLOPETODEG='0',T_SLOPE_MIN=0.0000001,T_SLOPE_MAX=20.000000,T_CURVE_MIN=0.00000001,T_CURVE_MAX=0.0001))
-    # generates the same peaks
-    rsaga.geoprocessor('ta_morphometry',"Fuzzy Landform Element Classification",env=myenv,
-                       list(SLOPE='mp_slope.sgrd',
-                            MINCURV='mp_mincurv.sgrd',
-                            MAXCURV='mp_maxcurv.sgrd',
-                            PCURV='mp_longcurv.sgrd',
-                            TCURV='mp_crosscurv.sgrd',
-                            FORM='mp_fuzzylandform.sgrd',
-                            PEAK='mp_fuzzy_peak.sgrd',
-                            SLOPETODEG=slope.to.deg,
-                            T_SLOPE_MIN=t.slope.min,
-                            T_SLOPE_MAX=t.slope.max,
-                            T_CURVE_MIN=t.curve.min,
-                            T_CURVE_MAX=t.curve.max))
-    
-    # read sdat file into raster object
-    peak.area<-raster('mp_fuzzylandform.sdat')
-    # we have to reassign correct projection due to some troubles in twgs84 transformations
-    crs(peak.area)<-target.proj4
-    # reclassify fuzzylandforms to get a binary peak mask
-    peak.area<-reclassify(peak.area, c(0,121,0, 121.1,123,1 ))
-    
+      # calculate Jochen Schmidt's fuzzy landforms (https://faculty.unlv.edu/buckb/GEOL%20786%20Photos/NRCS%20data/Fuzz/felementf.aml) fuzzylandoforms are:  
+      # using SAGA 'ta_morphometry',"Fuzzy Landform Element Classification" The result is classified as follows:
+      # PLAIN     , 100  # PIT       , 111  # PEAK      , 122  # RIDGE     , 120  # CHANNEL   , 101	
+      # SADDLE    , 121	# BSLOPE    ,   0	# FSLOPE    ,  10	# SSLOPE    ,  20	# HOLLOW    ,   1	
+      # FHOLLOW   ,  11	# SHOLLOW   ,  21	# SPUR      ,   2	# FSPUR     ,  12	# SSPUR     ,  22	
+      # NOTEwood SIZE=9,TOL_SLOPE=10.000000,TOL_CURVE=0.00001,EXPONENT=0.000000,ZSCALE=1.000000 
+      # fuzzy SLOPETODEG='0',T_SLOPE_MIN=0.0000001,T_SLOPE_MAX=20.000000,T_CURVE_MIN=0.00000001,T_CURVE_MAX=0.0001))
+      # generates the same peaks
+      rsaga.geoprocessor('ta_morphometry',"Fuzzy Landform Element Classification",env=myenv,
+                         list(SLOPE='mp_slope.sgrd',
+                              MINCURV='mp_mincurv.sgrd',
+                              MAXCURV='mp_maxcurv.sgrd',
+                              PCURV='mp_longcurv.sgrd',
+                              TCURV='mp_crosscurv.sgrd',
+                              FORM='mp_fuzzylandform.sgrd',
+                              PEAK='mp_fuzzy_peak.sgrd',
+                              SLOPETODEG=slope.to.deg,
+                              T_SLOPE_MIN=t.slope.min,
+                              T_SLOPE_MAX=t.slope.max,
+                              T_CURVE_MIN=t.curve.min,
+                              T_CURVE_MAX=t.curve.max))
+      
+      # read sdat file into raster object
+      peak.area<-raster('mp_fuzzylandform.sdat')
+      # we have to reassign correct projection due to some troubles in twgs84 transformations
+      crs(peak.area)<-target.proj4
+      # reclassify fuzzylandforms to get a binary peak mask
+      peak.area<-reclassify(peak.area, c(0,121,0, 121.1,123,1 ))
+      
     }
     # read sdat file into raster object
     dem<-raster('mp_dem.sdat')
@@ -264,7 +264,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     write.table(df,peak.list,row.names=F)    
     # duplicate dataframe
     final.peak.list<-df
-
+    
     # calculate dominance and prominence
     # as a first estimate to reduce the peaklist to more 'true' peaks 
     for (i in 1: nrow(final.peak.list)){
@@ -272,7 +272,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
       final.peak.list[i,5]<-9999
       if (i>1){
         final.peak.list[i,5]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
-        }}
+      }}
     # put result in fp
     fp<-final.peak.list
     # make a subset  with the tresholds as derived by the ini file for dominance
@@ -285,8 +285,8 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     # set the projection
     proj4string(SP) <- target.proj4
     writePointsShape(SP,"DEMpeaklist.shp")    
-
-
+    
+    
     if (ext.peak=='harry') {
       XHP<-extractHarry(extent,latlon.proj4,target.proj4)
       # call distance based merging of the peaks
@@ -301,9 +301,9 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
       # call cost based merging of the peaks
       if(merge==2){df<-costMergePeaks(SP,XOP,dem,domthres)}
     }
-           else {print('not implemented external peak data input')}
-           }
-    else {stop("not implemented yet")}
+    else {print('not implemented external peak data input')}
+  }
+  else {stop("not implemented yet")}
   
   names(df)<-c('xcoord', 'ycoord', 'altitude', 'name','dominance', 'prominence','independence')
   SP<-df
@@ -314,7 +314,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
   proj4string(SP) <- target.proj4
   # write shapefile
   writePointsShape(SP,"MergePeaks.shp")    
-
-# return merged peak data frames for common use
+  
+  # return merged peak data frames for common use
   return(df)
 }

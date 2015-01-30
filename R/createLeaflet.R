@@ -13,14 +13,23 @@
 #'style parameters are:
 #'
 #'type 1 classified data
-#'prop  Property (attribute) of the data to be styled, as string
-#'breaks A vector giving the breakpoints between the desired classes
-#'right If TRUE (default) classes are right-closed (left-open) intervals (>= breakpoint). Otherwise classes are left-closed (right-open) intervals (> breakpoint).
-#'out Handling of data outside the edges of breaks. One of 0 (left and right-closed), 1 (left-closed, right-open), 2 (left-open, right-closed) or 3 (left and right-open). Default is 0.
-#'style.par Handling of data outside the edges of breaks. One of 0 (left and right-closed), 1 (left-closed, right-open), 2 (left-open, right-closed) or 3 (left and right-open). Default is 0.
-#'style.val Styling values, a vector of colors or radii applied to the classes.
-#'leg  Legend title as string. The line break sequence may be used for line splitting.
 #'
+#'\code{prop}  Property (attribute) of the data to be styled, as string
+#'
+#'\code{breaks} A vector giving the breakpoints between the desired classes
+#'
+#'\code{right} If TRUE (default) classes are right-closed (left-open) intervals (>= breakpoint). Otherwise classes are left-closed (right-open) intervals (> breakpoint).
+#'
+#'\code{out} Handling of data outside the edges of breaks. One of 0 (left and right-closed), 1 (left-closed, right-open), 2 (left-open, right-closed) or 3 (left and right-open). Default is 0.
+#'
+#'\code{style.par} Handling of data outside the edges of breaks. One of 0 (left and right-closed), 1 (left-closed, right-open), 2 (left-open, right-closed) or 3 (left and right-open). Default is 0.
+#'
+#'\code{style.val} Styling values, a vector of colors or radii applied to the classes.
+#'
+#'\code{leg}  Legend title as string. The line break sequence may be used for line splitting.
+#'
+#'For more details refer to \link{leafletR}
+#'@seealso Documentation and functionality for the leaflet maps is taken from the \link{leafletR} package. 
 
 
 #'@author Chris Reudenbach 
@@ -31,7 +40,7 @@
 #' 
 
 #'
-#'@return a leaflet map as a subfolderstructure ready for local use or web upload
+#'@return a leaflet map object thats link to a subfolder containing the html output
 #'
 #'@export createLeaflet
 #'
@@ -48,29 +57,29 @@
 #' 
 #'#### create simple leaflet web map from a full analysis of Rpeak
 #'
-#' #### first generate the data
+#' #### getting the values
 #' ini.example=system.file("data","demo.ini", package="perfectPeak")
 #' dem.example=system.file("data","test.asc", package="perfectPeak")
 #' sp<-Rpeak(ini.example,dem.example)
 #' 
-#' #### we have to transform the data to spherical mercator 3857
-#' ll<-spTransform(sp,CRS("+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6378137 +b=6378137 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs "))
+#' #### leaflet is using spherical mercator 3857
+#' ll.3857<-spTransform(sp,CRS("+init=epsg:3857"))
 #' 
 #' #### now make a leaflet map
-#' # first we need a style
-#' sty <- styleGrad(prop='independence', breaks=seq(.0 , 10.0, by=1), right=T, out=0, style.val=rev(heat.colors(10)), leg='Independence Value', fill.alpha=0.7, rad=8)
-#' # seconde we create the leaflet object
-#' map<-createLeaflet(ll,title='Independence Measures',base=c("osm","mqsat","tls"),sty=sty,ctl=c("zoom", "scale", "layer","legend"))
-#' # third we visualize ist
-#' map
+#' # create a style need a style
+#' sty <- styleGrad(prop='independence', breaks=seq(.0 , 3.0, by=0.6), right=T, out=0, style.val=rev(heat.colors(5)), leg='Independence Value', fill.alpha=0.7, rad=8)
+#' # create the leaflet object
+#' m<-createLeaflet(ll.3857,title='Independence Measures',base=c("osm","mqsat","tls"),sty=sty,ctl=c("zoom", "scale", "layer","legend"))
+#' # visualize it
+#' m
 
 createLeaflet<-function(sp,title='Independence Measures',base=c("osm","mqosm","mqsat","water","toner","tls"),sty=sty,ctl=NA){
   
-# generate geojson file from SP
-peakjson <- toGeoJSON(data=sp, name="peakjson")
-
-# generate map
-map <- leaflet(data=peakjson, title=title,base.map=base, 
-               style=sty,popup=list("*"),incl.data=T, controls=ctl)
-
+  # generate geojson file from SP
+  peakjson <- toGeoJSON(data=sp, name="peakjson")
+  
+  # generate map
+  map <- leaflet(data=peakjson, title=title,base.map=base, 
+                 style=sty,popup=list("*"),incl.data=T, controls=ctl)
+  return(map)
 }

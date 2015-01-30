@@ -30,7 +30,7 @@
 #' calculateDominance <- function(peaklist.tupel)
 
 calculateDominance <- function(x.coord, y.coord, altitude,exact.enough, int=TRUE,myenv,root.dir, working.dir){
-
+  
   #- we need to create a mask file nodata=no peaks/1= current peak to calculate
   # the proximity:
   # (1)  write x.coord, y.coord, altitude to an ASCII file

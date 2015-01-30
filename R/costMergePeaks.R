@@ -23,7 +23,7 @@
 #'       new.peaklist<-costmergePeaks(dem.peaklist,ext.peaklist)
 
 
-costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres){
+costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres,plots=TRUE){
   # costpath is pretty time consuming so we construct a max search distance from the dsistance matrix + the dom threshold
   dist<-as.data.frame(pointDistance(ext.peaklist,dem.peaklist,lonlat=FALSE,allpairs=TRUE))
   min.dist<-  max(apply(dist,1,min),na.rm=TRUE)+domthres
@@ -32,32 +32,34 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres){
   # generate a df dor the results
   cost<-data.frame()
   # do peak by peak
+  print("Starting costPath have a look at the Plots panel and be happy...")
   for (i in 1: nrow(ext.peaklist)){
     # set startpoint of first list (external list)
     start=ext.peaklist[i,]
     for (j in 1: nrow(dem.peaklist)){
       # with this point start costpath loop if the target peak distance is less then mindist
       if (dist[i,j] <= min.dist){
-      # set target peak as end point (from DEMpeaklist)
-      end=dem.peaklist[j,]
-      # caluclate transition raster
-      tr=transition(costraster, mean, directions=8)
-      # correct it by geometry
-      trC=geoCorrection(tr)
-      # calculate the costpath
-      costpath=shortestPath(trC, start, end,output="SpatialLines")
-      # because you are bored plot it
-      plot(costraster)
-      lines(costpath)
-      # get the values of each path
-      tmp<-extract(costraster, costpath)
-      tmp.sum <- lapply(tmp, function(i) {
-        # get sum inverted altitude
-        val.sum <- sum(i)
-        return(val.sum)
-      })
-      # put the result in the cost matrix
-      cost[i,j] = tmp.sum
+        # set target peak as end point (from DEMpeaklist)
+        end=dem.peaklist[j,]
+        # caluclate transition raster
+        tr=transition(costraster, mean, directions=8)
+        # correct it by geometry
+        trC=geoCorrection(tr)
+        # calculate the costpath
+        costpath=shortestPath(trC, start, end,output="SpatialLines")
+        # because you are bored plot it
+        if (plots==TRUE){
+          plot(costraster)
+          lines(costpath)}
+        # get the values of each path
+        tmp<-extract(costraster, costpath)
+        tmp.sum <- lapply(tmp, function(i) {
+          # get sum inverted altitude
+          val.sum <- sum(i)
+          return(val.sum)
+        })
+        # put the result in the cost matrix
+        cost[i,j] = tmp.sum
       }else{cost[i,j]<-NA}
     }}
   # filter for min Value

@@ -40,7 +40,7 @@ iniParse <- function(fname.control)
               V1 != "")
   
   to.parse  <- trim(paste("ini.list$", trim(d$V3), "$",  trim(d$V1), " <- '",
-                     trim(d$V2), "'", sep=""))
+                          trim(d$V2), "'", sep=""))
   
   ini.list <- list()
   eval(parse(text=to.parse))

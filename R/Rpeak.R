@@ -48,65 +48,65 @@
 #' 
 
 Rpeak <-function(fname.control,fname.DEM){
-# rename environ and runtime vars
-i<-initEnvironGIS(fname.control,fname.DEM)
-ini<-i$ini
-myenv<-i$myenv
-extent<-i$extent
-
-### assign varnames to runtime varnames 
-# set working folder 
-root.dir <- ini$Pathes$workhome                       # project folder 
-working.dir <- ini$Pathes$runtimedata                 # working folder 
-
-# (R) set filenames 
-peak.list<- ini$Files$peaklist                        # output file name of peaklist
-dem.in<-    fname.DEM                                 # input DEM (has to be GDAL conform)
-if (dem.in==''){
-  dem.in<-  ini$Files$fndem
-  fname.DEM<-dem.in}                       
-# (R) set runtime arguments
-ext.peak<-      ini$Params$externalpeaks              # harry= Harrys Peaklist osm= OSM peak data
-kernel.size<-   ini$Params$filterkernelsize           # size of filter for mode=1; range 3-30; default=5 
-make.peak.mode<-ini$Params$makepeakmode               #  mode:1=minmax,2=wood&Co.
-exact.enough<-  as.numeric(ini$Params$exactenough)    # vertical exactness of flooding in meter
-epsg.code<-     as.numeric(ini$Projection$targetepsg) # projection of the data as provided by the meta data  
-target.proj4<-  ini$Projection$targetproj4            # corrrect string from the ini file
-latlon.proj4<-  ini$Projection$latlonproj4            # basic latlon wgs84 proj4 string
-
-# analysis of peaks and preprocessing of all data 
-final.peak.list<-makePeak(fname.DEM=dem.in,iniparam=ini,myenv=myenv,extent=extent)
-
-### final analysis and calculatuin of dominance, prominence, and independence
-# the called functions retrieve the corresponding values and put it into the corresponding dataframe field.
-# do it for each peak 
-for (i in 1: nrow(final.peak.list)){
-  # we want to know at least the prominence of the highest peak
-  final.peak.list[i,6]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
-  final.peak.list[i,7]<-9.999
-  # i>1 because the highest peak is relative reference point so dominance and independence is not computable 
-  if (i>1){
-    final.peak.list[i,5]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
-    final.peak.list[i,7]<-calculateIndependence(final.peak.list[i,])
-  }}
-
-### make it a spatialObject 
-# set the xy coordinates
-coordinates(final.peak.list) <- ~xcoord+ycoord
-# set the projection
-proj4string(final.peak.list) <- target.proj4
-
-### to have somthing as a result
-# write it to a shape file
-writePointsShape(final.peak.list,"finalpeaklist.shp")
-
-# visualize it for your convinience
-plot(final.peak.list)
-
-# delete all runtime files with filenames starting with run_, mp_
-file.remove(list.files(file.path(root.dir, working.dir), pattern =('mp_'), full.names = TRUE, ignore.case = TRUE))
-file.remove(list.files(file.path(root.dir, working.dir), pattern =('run'), full.names = TRUE, ignore.case = TRUE))
-
-print("That's it")
-return(final.peak.list)
+  # rename environ and runtime vars
+  i<-initEnvironGIS(fname.control,fname.DEM)
+  ini<-i$ini
+  myenv<-i$myenv
+  extent<-i$extent
+  
+  ### assign varnames to runtime varnames 
+  # set working folder 
+  root.dir <- ini$Pathes$workhome                       # project folder 
+  working.dir <- ini$Pathes$runtimedata                 # working folder 
+  
+  # (R) set filenames 
+  peak.list<- ini$Files$peaklist                        # output file name of peaklist
+  dem.in<-    fname.DEM                                 # input DEM (has to be GDAL conform)
+  if (dem.in==''){
+    dem.in<-  ini$Files$fndem
+    fname.DEM<-dem.in}                       
+  # (R) set runtime arguments
+  ext.peak<-      ini$Params$externalpeaks              # harry= Harrys Peaklist osm= OSM peak data
+  kernel.size<-   ini$Params$filterkernelsize           # size of filter for mode=1; range 3-30; default=5 
+  make.peak.mode<-ini$Params$makepeakmode               #  mode:1=minmax,2=wood&Co.
+  exact.enough<-  as.numeric(ini$Params$exactenough)    # vertical exactness of flooding in meter
+  epsg.code<-     as.numeric(ini$Projection$targetepsg) # projection of the data as provided by the meta data  
+  target.proj4<-  ini$Projection$targetproj4            # corrrect string from the ini file
+  latlon.proj4<-  ini$Projection$latlonproj4            # basic latlon wgs84 proj4 string
+  
+  # analysis of peaks and preprocessing of all data 
+  final.peak.list<-makePeak(fname.DEM=dem.in,iniparam=ini,myenv=myenv,extent=extent)
+  
+  ### final analysis and calculatuin of dominance, prominence, and independence
+  # the called functions retrieve the corresponding values and put it into the corresponding dataframe field.
+  # do it for each peak 
+  for (i in 1: nrow(final.peak.list)){
+    # we want to know at least the prominence of the highest peak
+    final.peak.list[i,6]<-calculateProminence(final.peak.list,final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+    final.peak.list[i,7]<-9.999
+    # i>1 because the highest peak is relative reference point so dominance and independence is not computable 
+    if (i>1){
+      final.peak.list[i,5]<-calculateDominance(final.peak.list[i,1], final.peak.list[i,2],final.peak.list[i,3],exact.enough=exact.enough,myenv=myenv,root.dir=root.dir, working.dir=working.dir)
+      final.peak.list[i,7]<-calculateIndependence(final.peak.list[i,])
+    }}
+  
+  ### make it a spatialObject 
+  # set the xy coordinates
+  coordinates(final.peak.list) <- ~xcoord+ycoord
+  # set the projection
+  proj4string(final.peak.list) <- target.proj4
+  
+  ### to have somthing as a result
+  # write it to a shape file
+  writePointsShape(final.peak.list,"finalpeaklist.shp")
+  
+  # visualize it for your convinience
+  plot(final.peak.list)
+  
+  # delete all runtime files with filenames starting with run_, mp_
+  file.remove(list.files(file.path(root.dir, working.dir), pattern =('mp_'), full.names = TRUE, ignore.case = TRUE))
+  file.remove(list.files(file.path(root.dir, working.dir), pattern =('run'), full.names = TRUE, ignore.case = TRUE))
+  
+  print("That's it")
+  return(final.peak.list)
 }

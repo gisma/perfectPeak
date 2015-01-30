@@ -59,7 +59,7 @@ initEnvironGIS <- function(fname.control,fname.DEM){
   target.proj4<-ini$Projection$targetproj4
   # we will also need the  basic latlon wgs84 proj4 string
   latlon.proj4<-ini$Projection$latlonproj4
-
+  
   # (raster) read GDAL data set
   dem<- raster(fname.DEM)
   projection(dem)<-target.proj4

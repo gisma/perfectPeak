@@ -29,10 +29,10 @@ distMergePeaks<- function(dem.peaklist,ext.peaklist){
   colnames(ep)<-c('xcoord', 'ycoord','name', 'altitude')
   ## calculates the difference of altitude for each peak  by each peak
   ## alt.diff<-abs(outer(ep[,2], dp[,3], "-"))
-
+  
   # calculate the distance for peak by peak 
   dist<-as.data.frame(pointDistance(ext.peaklist,dem.peaklist,lonlat=FALSE,allpairs=TRUE))
-
+  
   # filter data frame for minimum distance
   newdp<-dp[apply(dist,1,which.min),]
   
