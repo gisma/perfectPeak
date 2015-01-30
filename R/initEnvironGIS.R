@@ -20,8 +20,8 @@
 #'#### Example to initialize the enviroment and GIS bindings for use with R
 #'#### uses the ini list from an ini file
 #'       
-#' ini.example=system.file("demo.ini", package="perfectPeak")
-#' dem.example=system.file("test.asc", package="perfectPeak")
+#' ini.example=system.file("data","demo.ini", package="perfectPeak")
+#' dem.example=system.file("data"," test.asc", package="perfectPeak")
 #' initEnvironGIS(ini.example,dem.example)
 #' gmeta6()
 #' 
@@ -32,7 +32,8 @@ initEnvironGIS <- function(fname.control,fname.DEM){
   libraries<-c("downloader","sp","maptools","osmar",
                "RSAGA","rgeos","gdata","Matrix","igraph",
                "rgdal","gdistance","OpenStreetMap","spgrass6", 
-               "gdalUtils","raster","plotKML","maps","ggplot2")
+               "gdalUtils","raster","plotKML","maps","ggplot2",
+               "webmaps","leafletR","magrittr")
   
   # Install CRAN packages (if not already installed)
   inst <- libraries %in% installed.packages()

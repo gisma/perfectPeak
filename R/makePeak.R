@@ -290,7 +290,7 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     if (ext.peak=='harry') {
       XHP<-extractHarry(extent,latlon.proj4,target.proj4)
       # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,xHP)}
+      if(merge==1){df<-distMergePeaks(SP,XHP)}
       # call cost based merging of the peaks
       if(merge==2){df<-costMergePeaks(SP,XHP,dem,domthres)}
     }

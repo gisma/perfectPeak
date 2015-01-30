@@ -76,7 +76,7 @@ extractOSMPoints <- function(ext,ini,key="natural",val="peak",taglist=c('name','
   }
   
   # clean the df and rename the cols
-  m.df<-.stmp
+  m.df<-.stmp[-1]
   
   # convert the osm.peak df to a SpatialPoints object and assign reference system
   coordinates(m.df) <- ~xcoord+ycoord

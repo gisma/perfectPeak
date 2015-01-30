@@ -12,4 +12,4 @@ Sources:
     http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html
     Leonhard, W. (2012): Eigenstaendigkeit von Gipfeln.
 License: GPL (>= 2)
-Depends: R (>= 2.14),raster,gdalUtils,proj4,rgdal,maptools,RSAGA,igraph,spgrass6,downloader,sp,gdata,rgeos,gdistance,Matrix
+Depends: R (>= 2.14),raster,gdalUtils,proj4,rgdal,maptools,RSAGA,igraph,spgrass6,downloader,sp,gdata,rgeos,gdistance,Matrix,leafletR,OpenStreetMap,plotKML,maps,ggplot2,webmaps

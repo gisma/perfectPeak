@@ -24,8 +24,8 @@ For Further Information look at:\link{INI}
 #### Example to initialize the enviroment and GIS bindings for use with R
 #### uses the ini list from an ini file
 
-ini.example=system.file("demo.ini", package="perfectPeak")
-dem.example=system.file("test.asc", package="perfectPeak")
+ini.example=system.file("data","demo.ini", package="perfectPeak")
+dem.example=system.file("data"," test.asc", package="perfectPeak")
 initEnvironGIS(ini.example,dem.example)
 gmeta6()
 }

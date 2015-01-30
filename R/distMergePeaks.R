@@ -22,17 +22,15 @@
 
 distMergePeaks<- function(dem.peaklist,ext.peaklist){
   # generate temporary dataframes
+  #x       y      df.sub.Name df.sub.Altitude
+  #x        y         id             name  ele
   ep<-as.data.frame(ext.peaklist)
   dp<-as.data.frame(dem.peaklist)
-
+  colnames(ep)<-c('xcoord', 'ycoord','name', 'altitude')
   ## calculates the difference of altitude for each peak  by each peak
   ## alt.diff<-abs(outer(ep[,2], dp[,3], "-"))
-  ## filter data frame for minimum absolute altitude difference
-  ## new.alt.dp<-dp[apply(alt.diff,1,which.min),]
-  ## apply the corresponding names
-  ## new.alt.dp$name<-ep$df.sub.Name
-  
-  # calucalete the distance for peak by peak 
+
+  # calculate the distance for peak by peak 
   dist<-as.data.frame(pointDistance(ext.peaklist,dem.peaklist,lonlat=FALSE,allpairs=TRUE))
 
   # filter data frame for minimum distance

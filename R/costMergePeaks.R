@@ -65,6 +65,7 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres){
   # take the original df 
   ep<-as.data.frame(ext.peaklist)
   dp<-as.data.frame(dem.peaklist)
+  colnames(ep)<-c('xcoord', 'ycoord','name', 'altitude')
   # and merge them with using the min cost results
   newdp<-dp[apply(cost,1,which.min),]
   newdp$name<-ep$df.sub.Name
