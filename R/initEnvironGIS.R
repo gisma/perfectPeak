@@ -33,7 +33,7 @@ initEnvironGIS <- function(fname.control,fname.DEM){
                "RSAGA","rgeos","gdata","Matrix","igraph",
                "rgdal","gdistance","OpenStreetMap","spgrass6", 
                "gdalUtils","raster","plotKML","maps","ggplot2",
-               "webmaps","leafletR","magrittr")
+               "webmaps","leafletR","magrittr","devtools")
   
   # Install CRAN packages (if not already installed)
   inst <- libraries %in% installed.packages()
@@ -41,6 +41,8 @@ initEnvironGIS <- function(fname.control,fname.DEM){
   
   # Load packages into session 
   lapply(libraries, require, character.only=TRUE)
+  
+  install_github(repo = "RCura/webmaps")
   
   # get environment
   ini<-iniParse(fname.control)  
