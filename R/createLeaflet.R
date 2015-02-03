@@ -80,6 +80,6 @@ createLeaflet<-function(sp,title='Independence Measures',base=c("osm","mqosm","m
   
   # generate map
   map <- leaflet(data=peakjson, title=title,base.map=base, 
-                 style=sty,popup=list("*"),incl.data=T, controls=ctl)
+                 style=sty,popup=list("*"),incl.data=TRUE)
   return(map)
 }

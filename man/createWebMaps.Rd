@@ -106,8 +106,8 @@ ini.example=system.file("data","demo.ini", package="perfectPeak")
 dem.example=system.file("data","test.asc", package="perfectPeak")
 sp<-Rpeak(ini.example,dem.example)
 
-#### thunderforest is using lat lon 3857
-ll.3857 <-spTransform(sp,CRS("+init=epsg:3857"))
+#### thunderforest is using lat lon 4326
+ll.4326 <-spTransform(sp,CRS("+init=epsg:4326"))
 
 #### now make a openlayers map
 # create the openlayers object
