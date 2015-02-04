@@ -57,29 +57,34 @@
 #' ll.4326 <-spTransform(sp,CRS("+init=epsg:4326"))
 #' 
 #' #### now make a openlayers map
+#' 
+#' # generate a color table
+#' col.table<-heat.colors(n=nrow(ll.4326))
+#' 
+#' # create a style
+#' .style<-lstyle(pointRadius = "10",fillColor = "${color}", strokeColor = 'black',fillOpacity = 0.5)
+#'   
+
 
 #' # create the openlayers object
-#' m<-createWebMaps(ll.4326,tit='Independence')
+#' m<-createWebMaps(ll.4326,map.title='Independence',layer.title='Independence',color=col.table, style=.style)
 #' # visualize it
 #' m
 
-createWebMaps<-function(sp,tit='IndependenceMeasures',tp='+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'){
+createWebMaps<-function(sp,map.title='Map Title',layer.title='LayerTitle',color=color,style=.style,browse=TRUE,toShiny=FALSE,tp='+proj=tmerc +lat_0=0 +lon_0=10.33333333333333 +k=1 +x_0=0 +y_0=-5000000 +ellps=bessel +towgs84=577.326,90.129,463.919,5.137,1.474,5.297,2.4232 +units=m +no_defs'){
   sp.df<-as.data.frame(sp)
-  sp.df$color <- heat.colors(n=nrow(sp.df))
-  sp.df$color<- strtrim(rainbow(n=nrow(sp.df)), 7)
+  # add a color for each entry 
+  sp.df$color <- color
   coordinates(sp.df)<- ~x+y 
-  #spdf <- SpatialPointsDataFrame(sp, data.frame(test = heat.colors(n=nrow(sp))))
-  
-  style1<-lstyle(pointRadius = "10",fillColor = "${color}",
-         strokeColor = 'black',fillOpacity = 0.5)
-  
-  layer1<-layer(layerData = sp.df,name = "name",style1)
+
+  # create the layer object
+  layer1<-layer(layerData = sp.df, name = layer.title, style = .style)
 
   map<--webmap(layer1,
-               title=tit,
-               htmlFile=paste0(tit,".html"),
-               browse=TRUE,
-               toShiny=FALSE)
+               title=map.title,
+               htmlFile=paste0(map.title,".html"),
+               browse=browse,
+               toShiny=toShiny)
   
   return(map)
 }

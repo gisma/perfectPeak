@@ -110,8 +110,15 @@ sp<-Rpeak(ini.example,dem.example)
 ll.4326 <-spTransform(sp,CRS("+init=epsg:4326"))
 
 #### now make a openlayers map
+
+# generate a color table
+col.table<-heat.colors(n=nrow(ll.4326))
+
+# create a style
+.style<-lstyle(pointRadius = "10",fillColor = "${color}", strokeColor = 'black',fillOpacity = 0.5)
+
 # create the openlayers object
-m<-createWebMaps(ll.4326,tit='Independence')
+m<-createWebMaps(ll.4326,map.title='Independence',layer.title='Independence',color=col.table, style=.style)
 # visualize it
 m
 }
