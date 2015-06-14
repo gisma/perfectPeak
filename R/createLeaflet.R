@@ -1,4 +1,5 @@
 #'@name createLeaflet
+#'
 #'@title Creates a leaflet webmap using the results from perfectPeak analysis run
 #'
 #'@description Using the derived spatialdata objects from the perfect peak analysis a basic leaflet export is generated

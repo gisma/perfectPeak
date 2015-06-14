@@ -1,4 +1,5 @@
 #'@name makePeak
+#'
 #'@title Wrapper function that perform some morphometric Digital Elevation Model 
 #'(DEM) analysis to generate a set of morphometric and in realreliable peaks 
 #'

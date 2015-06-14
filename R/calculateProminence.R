@@ -1,4 +1,5 @@
 #'@name calculateProminence
+#'
 #'@title Calculates the prominence Value for a given tuple of coordinates and altitude
 # as derived from DEM and provided by the peaklist
 #'@description Calculates the prominence Value for a given tuple of coordinates and altitude

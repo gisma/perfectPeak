@@ -1,4 +1,5 @@
 #'@name Rpeak
+#'
 #'@title Example script that can be used as a wrapper function to start the 
 #'perfect peak analysis 
 #'

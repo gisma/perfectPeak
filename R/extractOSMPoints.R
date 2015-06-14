@@ -1,4 +1,5 @@
 #'@title Extract peak position and altitude from OSM data
+#'
 #'@description  The current OSM data base is cropped for th earea of interest Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest 
 
 #'@details 
