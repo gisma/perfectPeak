@@ -82,7 +82,7 @@ extractOSMPoints <- function(ext,ini,key="natural",val="peak",taglist=c('name','
   coordinates(m.df) <- ~xcoord+ycoord
   proj4string(m.df)<-"+proj=longlat +datum=WGS84"  
   
-  # project the  SpatialPoints from geographical coordinates to target projection
+  r# project the  SpatialPoints from geographical coordinates to target projection
   m.df<-spTransform(m.df,CRS(target.proj4))
   
   # save to shapefile
