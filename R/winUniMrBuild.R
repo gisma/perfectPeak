@@ -16,17 +16,17 @@
 #' \code{\link{roxygenize}}, \code{\link[devtools]{build}},\code{\link{install.packages}}.
 #' 
 #' @author 
-#' Florian Detsch
+#' Florian Detsch 
 #' 
 #' @examples
 #' \dontrun{
 #' ## when in a package directory, e.g. '~/satellite' 
-#' manualBuild()
+#' winUniMrBuild()
 #' }
 #' 
-#' @export manualBuild
-#' @name manualBuild
-manualBuild <- function(dsn = getwd(), document = TRUE, ...) {
+#' @export winUniMrBuild
+#' @name winUniMrBuild
+winUniMrBuild <- function(dsn = getwd(), document = TRUE, ...) {
   
   ## reset 'dsn' to 'H:/...'  
   if (length(grep("students_smb", dsn)) > 0) {
@@ -45,6 +45,9 @@ manualBuild <- function(dsn = getwd(), document = TRUE, ...) {
   ## build package
   cat("\nBuilding package...\n")
   devtools::build(pkg = dsn, path = dirname(dsn), ...)
+  pkg <- list.files(dirname("H:/Dokumente"), full.names = TRUE,
+                    pattern = paste0("H:/Dokumente", ".*.tar.gz$"))
+  file.copy(pkg,dsn)
   
   ## install package
   cat("Installing package...\n")
@@ -53,13 +56,6 @@ manualBuild <- function(dsn = getwd(), document = TRUE, ...) {
   pkg <- pkg[length(pkg)]
   
   install.packages(pkg, repos = NULL)
-
-  pkg <- list.files(dirname("H:/Dokumente"), full.names = TRUE,
-                    pattern = paste0("H:/Dokumente", ".*.tar.gz$"))
-  pkg <- pkg[length(pkg)]
-  
-  install.packages(pkg, repos = NULL)
-  
   
   return(invisible(NULL))
 }
