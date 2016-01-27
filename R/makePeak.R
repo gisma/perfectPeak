@@ -1,5 +1,4 @@
 #'@name makePeak
-#'
 #'@title Wrapper function that perform some morphometric Digital Elevation Model 
 #'(DEM) analysis to generate a set of morphometric and in realreliable peaks 
 #'
@@ -54,7 +53,7 @@
 #'  #### create a dataframe containing coordinates, altitude and name and corresponding parameters
 #' # assign file names
 #' ini.demo=system.file("data","demo.ini", package="perfectPeak")
-#' dem.demo=system.file("data","test.asc", package="perfectPeak")
+#' dem.demo=system.file("data","demo.asc", package="perfectPeak")
 #'
 #' # get ini params and myenv
 #' tmp<-initEnvironGIS(ini.demo,dem.edemo)
@@ -232,9 +231,9 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     
     # use extract to get the cellnumber and altitude for each unique peak area
     xy = extract(dem, SPpoly.clump.peak, cellnumbers = TRUE)
-    # now we use lapply to iterate tthrough each ID
-    # i is the runtime variable for each polygon 
     
+    # now we use lapply to iterate through each ID
+    # i is the runtime variable for each polygon 
     ls_spdf_max <- lapply(xy, function(i) {
       # identify position of max Altitude 
       id_max <- which.max(i[, 2])

@@ -1,15 +1,25 @@
 Package: perfectPeak
 Type: Package
 Title: Calculates the perfect peaks
-Version: 0.2
-Date: 2015-01-19
+Version: 0.3
+Date: 2016-01-27
 Author: Chris Reudenbach
 Maintainer: Chris Reudenbach <creuden@gmail.com>
-Description: perfectPeak is a package that combines the results of the Adavenced GIS course Marburg Geography.  It provides the basic functions for calculating the parameters of dominance, prominence to determine the  independence value of an peak. Furthermore there it contains functionality to initialise the R bindings to GRASS, SAGA and GDAL. The package has some aaditionally functionality in reading and using external data as Harrys Berliste and OSM data to derive the names of the peaks for Output. Finally ther is functionallity for simple webmapping of the results.
-Sources: 
-    Marburg Open Courseware Advanced GIS: http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description
-    Rauch. C. (2012): Der perfekte Gipfel.Panorama,2/2012,S.112
-    http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-prominenz-eigenstaendigkeit-eines-berges_aid_11186.html
-    Leonhard, W. (2012): Eigenstaendigkeit von Gipfeln.
+Description: perfectPeak is a package that combines the results of the Adavenced
+    GIS course Marburg Geography. It provides the basic functions for calculating
+    the parameters of dominance, prominence to determine the independence
+    value of an peak. Furthermore there it contains functionality to initialise
+    the R bindings to GRASS, SAGA and GDAL. The package has some aaditionally
+    functionality in reading and using external data as Harrys Berliste and OSM data
+    to derive the names of the peaks for Output. Finally ther is functionallity for
+    simple webmapping of the results.
+Sources: Marburg Open Courseware Advanced GIS: http://
+    moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-
+    gis:description Rauch. C. (2012): Der perfekte Gipfel.Panorama,2/2012,S.
+    112 http://www.alpenverein.de/dav-services/panorama-magazin/dominanz-
+    prominenz-eigenstaendigkeit-eines-berges_aid_11186.html Leonhard, W. (2012):
+    Eigenstaendigkeit von Gipfeln.
 License: GPL (>= 2)
-Depends: R (>= 2.14),raster,gdalUtils,proj4,rgdal,maptools,RSAGA,igraph,spgrass6,downloader,sp,gdata,rgeos,gdistance,Matrix,leafletR,OpenStreetMap,plotKML,maps,ggplot2,webmaps
+Depends:
+    R (>= 2.14),raster,gdalUtils,proj4,rgdal,maptools,RSAGA,igraph,downloader,sp,gdata,rgeos,gdistance,Matrix,leafletR,OpenStreetMap,plotKML,maps,ggplot2,webmaps
+RoxygenNote: 5.0.1

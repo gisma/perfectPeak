@@ -1,5 +1,4 @@
 #'@name createWebMaps
-#'
 #'@title Creates a openlayers webmap using the results from perfectPeak analysis run
 #'
 #'@description Using the derived spatialdata objects from the perfect peak analysis a basic leaflet export is generated
@@ -51,7 +50,7 @@
 #'
 #' #### getting the values
 #' ini.example=system.file("data","demo.ini", package="perfectPeak")
-#' dem.example=system.file("data","test.asc", package="perfectPeak")
+#' dem.example=system.file("data","demo.asc", package="perfectPeak")
 #' sp<-Rpeak(ini.example,dem.example)
 #' 
 #' #### thunderforest is using lat lon 4326 

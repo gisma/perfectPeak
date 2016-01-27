@@ -1,5 +1,4 @@
 #'@title Extract peak position and altitude from OSM data
-#'
 #'@description  The current OSM data base is cropped for th earea of interest Kmz file of Harry's peak list is downloaded and will be cleaned to derive coordinates altitude and name of all available peaks within a region of interest 
 
 #'@details 
@@ -33,7 +32,7 @@
 #'#### Example extract OSM nodes from a region of interst (ROI)
 #'#    create a dataframe containing coordinates, tag-attribute and value
 #' ini.example=system.file("data","demo.ini", package="perfectPeak") 
-#' dem.example=system.file("data","test.asc", package="perfectPeak")      
+#' dem.example=system.file("data","demo.asc", package="perfectPeak")      
 #' ini<-initEnvironGIS(ini.example,dem.example)
 #' extractOSMPoints(ini,key="natural",val="peak",taglist=c('name','ele'))
 #' 
@@ -83,7 +82,7 @@ extractOSMPoints <- function(ext,ini,key="natural",val="peak",taglist=c('name','
   coordinates(m.df) <- ~xcoord+ycoord
   proj4string(m.df)<-"+proj=longlat +datum=WGS84"  
   
-  r# project the  SpatialPoints from geographical coordinates to target projection
+  # project the  SpatialPoints from geographical coordinates to target projection
   m.df<-spTransform(m.df,CRS(target.proj4))
   
   # save to shapefile

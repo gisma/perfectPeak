@@ -1,5 +1,4 @@
 #'@name iniParse
-#'
 #'@title Parse an Windows like ini file to get the the entries
 #'@description  Any Windows type ini file will be parsed so that the sections and the variables may be used within R for all kind of settings.
 #'

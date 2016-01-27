@@ -1,5 +1,4 @@
 #'@name calculateProminence
-#'
 #'@title Calculates the prominence Value for a given tuple of coordinates and altitude
 # as derived from DEM and provided by the peaklist
 #'@description Calculates the prominence Value for a given tuple of coordinates and altitude
@@ -57,16 +56,14 @@ calculateProminence <- function(peaks,x.coord, y.coord, altitude,exact.enough=5,
   write.table(peaks[-c(4:8)],file = "run_peaks.xyz", row.names = FALSE, col.names = c('1','2','3') , dec = ".",sep ='\t')
   # (2a) (RSAGA) create current_peak shape file
   rsaga.geoprocessor('io_shapes',3,env=myenv,
-                     list(SHAPES='run_pro_current_peak.shp',
-                          X_FIELD=1,
-                          Y_FIELD=2,
+                     list(POINTS='run_pro_current_peak.shp',
+                          HEADLINE=1,
                           FILENAME='run.xyz'))
   
   # (2b) (RSAGA) create all_peak point shapefile
   rsaga.geoprocessor('io_shapes',3,env=myenv,
-                     list(SHAPES='run_pro_all_peaks.shp',
-                          X_FIELD=1,
-                          Y_FIELD=2,
+                     list(POINTS='run_pro_all_peaks.shp',
+                          HEADLINE=1,
                           FILENAME='run_peaks.xyz'))
   
   # (3a-c) create current_peak polygon shape file for intersecting
@@ -156,8 +153,8 @@ calculateProminence <- function(peaks,x.coord, y.coord, altitude,exact.enough=5,
     
     # (RSAGA) convert this to a ASCII csv file
     rsaga.geoprocessor('io_shapes', 2 ,env=myenv,
-                       list(SHAPES='flood_run_result.shp',
-                            ALL=TRUE,
+                       list(POINTS='flood_run_result.shp',
+                            FIELD=TRUE,
                             HEADER=TRUE,
                             SEPARATE=0,
                             FILENAME='flood_run_result.txt'))
@@ -166,13 +163,13 @@ calculateProminence <- function(peaks,x.coord, y.coord, altitude,exact.enough=5,
     result=read.csv(file = 'flood_run_result.txt', header=T, sep="\t",dec='.')
     
     # (R) check if the table has correct dimensions
-    if (ncol(result)!=7) {stop('no results during selection of the peak polygon -> have to stop')}
+    #if (ncol(result)!=7) {stop('no results during selection of the peak polygon -> have to stop')}
     
     # (R) name the cols
-    colnames(result)=c("c1","c2","c3","c4","c5","c6","c7")
+    colnames(result)=c("c1","c2","c3","c4","c5","c6","c7","c8","c9","c10","c11","c12","c13","c14" )
     
     # (R) filter if c6=255 and c7 > 1 (= peak_polygon contains more than one peak => landbridge is closed)
-    if (nrow(subset(result,result$c6 == 255 & result$c7 > 1)) > 0){
+    if (nrow(subset(result,result$c8 == 255 & result$c9 > 1)) > 0){
       # landbrige is closed but maybe in avery coarse way so check if the difference is small enough default=5
       if((max.flood.altitude-min.flood.altitude) < exact.enough){
         # closed landbrige is found

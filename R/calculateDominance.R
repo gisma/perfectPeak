@@ -41,7 +41,7 @@ calculateDominance <- function(x.coord, y.coord, altitude,exact.enough, int=TRUE
   # (R)  (1) write peak-tupel to csv format
   write.table(list(x.coord, y.coord, altitude), 'run.xyz', row.names = FALSE, col.names = c('1','2','3') , dec = ".",sep ='\t')
   # (SAGA) (2) create a point shapefile from the extracted line
-  system("saga_cmd io_shapes 3 -SHAPES=run_peak.shp -X_FIELD=1 -Y_FIELD=2 -FILENAME=run.xyz")
+  system("saga_cmd io_shapes 3 -POINTS=run_peak.shp -HEADLINE=1 -FILENAME=run.xyz")
   # (SAGA) (3) create a nodata raster for rasterizing the peak position
   #  for running SAGA proximity a nodata grid is necessary 
   rsaga.grid.calculus('mp_dem.sgrd', 'run_peak.sgrd','(a/a*(-99999))',env=myenv)

@@ -1,5 +1,4 @@
 #'@name Rpeak
-#'
 #'@title Example script that can be used as a wrapper function to start the 
 #'perfect peak analysis 
 #'
@@ -9,7 +8,7 @@
 #'for a given georeferencend Digital Elevation Model (DEM)
 #'
 #'You can use the function as it is or alternatively use it as skeleton control
-#' script that you cab adapt to your needs.
+#' script that you may adapt to your needs.
 #'
 #'@usage Rpeak(fname.control,fname.DEM)
 #' 
@@ -43,13 +42,13 @@
 #'
 #'
 #' ini.example=system.file("data","demo.ini", package="perfectPeak")
-#' dem.example=system.file("data","test.asc", package="perfectPeak")
+#' dem.example=system.file("data","demo.asc", package="perfectPeak")
 #' Rpeak(ini.example,dem.example)
 #' 
 #' 
 
 Rpeak <-function(fname.control,fname.DEM){
-  # rename environ and runtime vars
+  # assign environ and runtime vars using control ini file
   i<-initEnvironGIS(fname.control,fname.DEM)
   ini<-i$ini
   myenv<-i$myenv
@@ -101,8 +100,8 @@ Rpeak <-function(fname.control,fname.DEM){
   # write it to a shape file
   writePointsShape(final.peak.list,"finalpeaklist.shp")
   
-  # visualize it for your convinience
-  plot(final.peak.list)
+  # visualize it for your convenience
+  mapview(final.peak.list)
   
   # delete all runtime files with filenames starting with run_, mp_
   file.remove(list.files(file.path(root.dir, working.dir), pattern =('mp_'), full.names = TRUE, ignore.case = TRUE))
