@@ -2,10 +2,9 @@
 #'
 #'@title Retrieves online geodata and converts it to raster/sp objects
 #'
-#'@description Robert Hijmans getData() function from the raster package is enhanced by an arbitrary but pretty interesting selction of geodata sets. You  will find some better choices for climate and DEM data as well as some easy to use interfaces to OSM and other crowd sourced data compilations. 
-#' The main issue of the functionis to offer an easy to use access to a wider range of free to access data sets. 
-#' that may improve significantly the quality of typical ecological and other spatial analysis approaches that usually utilize straightforward Robert's standard data
-#' If necessary all data will be downloaded georefrenced and converted in raster or spatial objects.
+#'@description Robert J. Hijmans getData() from the raster package is well known and highly used. The only disadvantage is that currently a bunch of great additional and/or improved data sets is available.  getGeoData provides some more actual or better choices for climate and DEM data as well as some easy to use interfaces to OSM and other crowd sourced data compilations. 
+#' The main issue of the functionis to offer an easy to use access to a wider range of free to access data sets that may improve significantly the quality of typical ecological and other spatial analysis approaches by an straightforward utilization of data.
+#' You may download the data individually but by default all data will be downloaded georeferenced and converted in \link{raster} or \link{sp} objects.
 #' 
 #'@usage getGeoData(name, download=TRUE, path='', ...)
 #' ccodes()
@@ -16,7 +15,7 @@
 #'\code{SRTM}, 
 #'\code{alt}, 
 #'\code{worldclim},
-#'\code{schwazLGMData},  
+#'\code{schmatzPangea},  
 #'\code{harrylist}, 
 #'\code{OSM}, 
 #'\code{tiroldem}. 
@@ -34,7 +33,7 @@
 #' \code{alt} stands for altitude (elevation); the data were aggregated from SRTM 90 m resolution data between -60 and 60 latitude. \cr \cr
 #' \code{worldclim} is a database of global interpolated climate data. \cr \cr
 #' \code{countries} has polygons for all countries at a higher resolution than the 'wrld_simpl' data\cr in the maptools pacakge . \cr \cr
-#' \code{schwazLGMData} provides the Gridded climate data from 5 Global Climate Models (GCM) of the Last Glacial Maximum (LGM) downscaled to 30 arc seconds for Europe \url{http://doi.pangaea.de/10.1594/PANGAEA.845883}\cr \cr
+#' \code{schmatzPangea} provides the Gridded climate data from 5 Global Climate Models (GCM) of the Last Glacial Maximum (LGM) downscaled to 30 arc seconds for Europe \url{http://doi.pangaea.de/10.1594/PANGAEA.845883}\cr \cr
 #' \code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr \cr
 #' \code{OSMp} is the OSM Point Data from the current OSM database\cr
 #' \code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol. For Copyright and further information  see: \link{DEM}\cr \cr
@@ -63,7 +62,7 @@
 #'    \code{getGeoData('worldclim', var='bio', res=10)}\cr
 #' 
 #'  +++ additional datasets +++
-#'If  \code{name}='schmatzLGMData' you have to specify the item of interest. Please note: The data download may take a long time!\cr
+#'If  \code{name}='schmatzPangea' you have to specify the item of interest. Please note: The data download may take a long time!\cr
 #'The list of allowd items is: \cr
 #'   \itemize{
 #'\item \code{prec_eu_wc_30s} baseline climate	precipitation, Worldclim LGM coastline, current, 30x30sec	,	http://hs.pangaea.de/model/schmatz/prec_eu_wc_30s 
@@ -130,8 +129,8 @@
 #'\item \code{TT}: \code{startTime = 1}  is equivalent to the Januar 1659 \code{endTime = 4080}  is equvalent to December 1998
 #'}
 #'}
-#'\code{m<-getGeoData('schmatzLGMData', item="tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s",startTime=1,endTime=3)}
-#'\code{m<-getGeoData('schmatzLGMData', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",var="bio_1")}
+#'\code{m<-getGeoData('schmatzPangea', item="tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s",startTime=1,endTime=3)}
+#'\code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",var="bio_1")}
 #'\code{TT<- getGeoData('schmaztLGMData', item='TT_Luterbacher_Xoplaki_1659-1998')}
 #'
 #'If  \code{name=}'harrylist' you will download and clean the complete list\cr
@@ -176,7 +175,7 @@
 #'#### Example getGeoData
 #'       
 #' \dontrun{
-#' getGeoData('schmatzLGMData', item='tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s',endTime=12)
+#' getGeoData('schmatzPangea', item='tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s',endTime=12)
 #' getGeoData('tiroldem', item='ibk_10m', all=FALSE)
 #' getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='saddle',taglist=c('name','ele','direction'))
 #' getGeoData('harrylist')
@@ -214,7 +213,7 @@ getGeoData <- function(name='GADM', download=TRUE, path='', ...) {
     .OSMp(..., download=download, path=path)
   } else if (name=='alt') {
     .raster(..., name=name, download=download, path=path)
-  } else if (name=='schmatzLGMData') {
+  } else if (name=='schmatzPangea') {
     .schmatz(..., download=download, path=path)
   } else if (name=='worldclim') {
     .worldclim(..., download=download, path=path)
@@ -719,21 +718,21 @@ ccodes <- function() {
 }
 
 .schmatz <- function(item, startTime=1,endTime=1, var=NULL, path, download=TRUE) {
-  stopifnot( (item == 'prec_eu_wc_30s') | (item == 'tave_eu_wcpi_30s') | (item == 'tmax_eu_wcpi_30s')
-             | (item == 'tmin_eu_wcpi_30s') |(item == 'bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s') 
-             | (item == 'bioclim_A_MO_pmip2_21k_oa_CNRM_eu_30s') |(item == 'bioclim_A_MO_pmip2_21k_oa_FGOALS_eu_30s') 
-             | (item == 'bioclim_A_MO_pmip2_21k_oa_IPSL_eu_30s') |(item == 'bioclim_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s') 
-             | (item == 'pr_A_MO_pmip2_21k_oa_CCSM_eu_30s') | (item == 'pr_A_MO_pmip2_21k_oa_CNRM_eu_30s')
-             | (item == 'pr_A_MO_pmip2_21k_oa_FGOALS_eu_30s') | (item == 'pr_A_MO_pmip2_21k_oa_IPSL_eu_30s')
-             | (item == 'pr_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s') | (item == 'tas_A_MO_pmip2_21k_oa_CCSM_eu_30s')
-             | (item == 'tas_A_MO_pmip2_21k_oa_CNRM_eu_30s') | (item == 'tas_A_MO_pmip2_21k_oa_FGOALS_eu_30s')
-             | (item == 'tas_A_MO_pmip2_21k_oa_IPSL_eu_30s') | (item == 'tas_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s')
-             | (item == 'tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s') | (item == 'tasmax_A_MO_pmip2_21k_oa_CNRM_eu_30s')
-             | (item == 'tasmax_A_MO_pmip2_21k_oa_FGOALS_eu_30s') | (item == 'tasmax_A_MO_pmip2_21k_oa_IPSL_eu_30s')
-             | (item == 'tasmax_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s') | (item == 'tasmin_A_MO_pmip2_21k_oa_CCSM_eu_30s')
-             | (item == 'tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s') | (item == 'tasmin_A_MO_pmip2_21k_oa_FGOALS_eu_30s')
-             | (item == 'tasmin_A_MO_pmip2_21k_oa_IPSL_eu_30s') | (item == 'tasmin_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s')
-             | (item == 'TT_Luterbacher_Xoplaki_1659-1998'))
+  validItems<-c('prec_eu_wc_30s', 'tave_eu_wcpi_30s', 'tmax_eu_wcpi_30s',  'tmin_eu_wcpi_30s', 
+           'bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+           'bioclim_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+           'bioclim_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 'pr_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
+           'pr_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'pr_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
+           'pr_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'pr_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
+           'tas_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tas_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+           'tas_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tas_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+           'tas_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
+           'tasmax_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
+           'tasmax_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
+           'tasmin_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+           'tasmin_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+           'tasmin_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'TT_Luterbacher_Xoplaki_1659-1998')
+  stopifnot(item %in% validItems)
   
   f <- item
   if (f != 'TT_Luterbacher_Xoplaki_1659-1998'){
@@ -751,9 +750,9 @@ ccodes <- function() {
   if (!file.exists(ncfilename)) {
     if (download) { 
       theurl <- paste("http://hs.pangaea.de/model/schmatz/", f,ext, sep="")
-      writeLines('The requested file ', ncfilename,'  is loading from tape...')
-      cat( 'Processing and download  may take a while...')
-      cat( 'Further  information: http://doi.pangaea.de/10.1594/PANGAEA.845883?format=html#lcol5.ds12635729')
+      cat( ncfilename,'  is loading from tape...\n
+     Processing and download  may take a while...\n
+     Further  information: http://doi.pangaea.de/10.1594/PANGAEA.845883?format=html#lcol5.ds12635729')
       test <- try (.download(theurl, ncfilename) , silent=TRUE)
     } else {cat('file not available locally, use download=TRUE\n') }  
   }
@@ -787,7 +786,7 @@ ccodes <- function() {
   tiffFiles <- list.files(dirname(ncfilename), pattern = glob2rx(paste0(var,"*.tif")),
                           full.names = TRUE, recursive = TRUE)
     
-  if (length(tiffFilles) > 0) { 
+  if (length(tiffFiles) > 0) { 
     
 
     cat('creating and georeferencing corresponding rasterstack...')
