@@ -38,7 +38,7 @@ type 1 classified data
 
 \code{leg}  Legend title as string. The line break sequence may be used for line splitting.
 
-For more details refer to \link{leafletR}
+For more details refer to \link{leaflet}
 }
 \examples{
   
@@ -77,6 +77,6 @@ Chris Reudenbach
 Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-marburg.de/doku.php?id=courses:msc:advanced-gis:description}
 }
 \seealso{
-Documentation and functionality for the leaflet maps is taken from the \link{leafletR} package.
+Documentation and functionality for the leaflet maps is taken from the \link{leaflet} package.
 }
 

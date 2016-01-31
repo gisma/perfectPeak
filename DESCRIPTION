@@ -21,5 +21,5 @@ Sources: Marburg Open Courseware Advanced GIS: http://
     Eigenstaendigkeit von Gipfeln.
 License: GPL (>= 2)
 Depends:
-    R (>= 2.14),raster,gdalUtils,proj4,rgdal,maptools,RSAGA,igraph,downloader,sp,gdata,rgeos,gdistance,Matrix,leafletR,OpenStreetMap,plotKML,maps,ggplot2,webmaps
+    R (>= 2.14),raster,gdalUtils,proj4,foreach,doParallel,rgdal,maptools,RSAGA,igraph,downloader,sp,gdata,rgeos,gdistance,Matrix,mapview,OpenStreetMap,plotKML,maps,ggplot2,webmaps
 RoxygenNote: 5.0.1

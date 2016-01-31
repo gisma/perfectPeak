@@ -16,7 +16,8 @@
 #' \code{\link{roxygenize}}, \code{\link[devtools]{build}},\code{\link{install.packages}}.
 #' 
 #' @author 
-#' Florian Detsch 
+#' Florian Detsch, Chris Reudenbach
+#' 
 #' 
 #' @examples
 #' \dontrun{
@@ -26,7 +27,7 @@
 #' 
 #' @export winUniMrBuild
 #' @name winUniMrBuild
-winUniMrBuild <- function(dsn = getwd(), document = TRUE, ...) {
+winUniMrBuild <- function(dsn = getwd(), pkgDir="H:/Dokumente",document = TRUE, ...) {
   
   ## reset 'dsn' to 'H:/...'  
   if (length(grep("students_smb", dsn)) > 0) {
@@ -44,14 +45,13 @@ winUniMrBuild <- function(dsn = getwd(), document = TRUE, ...) {
   
   ## build package
   cat("\nBuilding package...\n")
+  
   devtools::build(pkg = dsn, path = dirname(dsn), ...)
-  pkg <- list.files(dirname("H:/Dokumente"), full.names = TRUE,
-                    pattern = paste0("H:/Dokumente", ".*.tar.gz$"))
-  file.copy(pkg,dsn)
+  
   
   ## install package
   cat("Installing package...\n")
-  pkg <- list.files(dirname(dsn), full.names = TRUE,
+  pkg <- list.files(dirname(pkgDir), full.names = TRUE,
                     pattern = paste0(basename(dsn), ".*.tar.gz$"))
   pkg <- pkg[length(pkg)]
   

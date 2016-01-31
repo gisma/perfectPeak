@@ -28,8 +28,8 @@
 #'
 #'\code{leg}  Legend title as string. The line break sequence may be used for line splitting.
 #'
-#'For more details refer to \link{leafletR}
-#'@seealso Documentation and functionality for the leaflet maps is taken from the \link{leafletR} package. 
+#'For more details refer to \link{leaflet}
+#'@seealso Documentation and functionality for the leaflet maps is taken from the \link{leaflet} package. 
 
 
 #'@author Chris Reudenbach 

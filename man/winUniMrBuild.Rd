@@ -4,7 +4,8 @@
 \alias{winUniMrBuild}
 \title{Build package manually}
 \usage{
-winUniMrBuild(dsn = getwd(), document = TRUE, ...)
+winUniMrBuild(dsn = getwd(), pkgDir = "H:/Dokumente", document = TRUE,
+  ...)
 }
 \arguments{
 \item{dsn}{'character'. Target folder containing source files; defaults to 
@@ -31,7 +32,7 @@ winUniMrBuild()
 
 }
 \author{
-Florian Detsch
+Florian Detsch, Chris Reudenbach
 }
 \seealso{
 \code{\link{roxygenize}}, \code{\link[devtools]{build}},\code{\link{install.packages}}.

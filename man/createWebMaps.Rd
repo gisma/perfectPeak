@@ -139,6 +139,6 @@ Marburg Open Courseware Advanced GIS: \url{http://moc.environmentalinformatics-m
 \seealso{
 Documentation and functionality for the leaflet maps is taken from the \link{leafletR} package.
 
-Documentation and functionality for the leaflet maps is taken from the \link{leafletR} package.
+Documentation and functionality for the leaflet maps is taken from the \link{leaflet} package.
 }
 
