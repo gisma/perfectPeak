@@ -9,15 +9,15 @@ ccodes()
 }
 \arguments{
 \item{name}{Data set name, currently supported are: 
-\code{GADM}, 
-\code{countries}, 
-\code{SRTM}, 
-\code{alt}, 
-\code{worldclim},
-\code{schmatzPangea},  
-\code{harrylist}, 
-\code{OSM}, 
-\code{tiroldem}. 
+\code{GADM}, \cr
+\code{countries}, \cr
+\code{SRTM}, \cr
+\code{alt}, \cr
+\code{worldclim},\cr
+\code{schmatzPangea},\cr  
+\code{harrylist}, \cr
+\code{OSM}, \cr
+\code{tiroldem}.\cr 
 See Details for more info}
 
 \item{download}{Logical \code{TRUE} data will be downloaded if not locally available}
@@ -30,26 +30,19 @@ See Details for more info}
 A spatial object (Raster* or Spatial*)
 }
 \description{
-Robert J. Hijmans getData() from the raster package is well known and highly used. The only disadvantage is that currently a bunch of great additional and/or improved data sets is available.  getGeoData provides some more actual or better choices for climate and DEM data as well as some easy to use interfaces to OSM and other crowd sourced data compilations. 
+Robert J. Hijmans getData() from the raster package is well known and highly used. The only disadvantage is that it currently doesn't support a bunch of great additional and/or improved/newer data sets.  getGeoData provides some more actual or better choices for climate and DEM data as well as some easy to use interfaces to OSM and other crowd sourced data compilations. 
 The main issue of the functionis to offer an easy to use access to a wider range of free to access data sets that may improve significantly the quality of typical ecological and other spatial analysis approaches by an straightforward utilization of data.
 You may download the data individually but by default all data will be downloaded georeferenced and converted in \link{raster} or \link{sp} objects.
 }
 \details{
-\code{SRTM} refers to the hole-filled CGIAR-SRTM (90 m resolution). \cr \cr
-\code{GADM} is a database of global administrative boundaries. \cr \cr
-\code{alt} stands for altitude (elevation); the data were aggregated from SRTM 90 m resolution data between -60 and 60 latitude. \cr \cr
-\code{worldclim} is a database of global interpolated climate data. \cr \cr
+\code{GADM} is a database of global administrative boundaries. \cr 
+\code{alt} stands for altitude (elevation); the data were aggregated from SRTM 90 m resolution data between -60 and 60 latitude. \cr
 \code{countries} has polygons for all countries at a higher resolution than the 'wrld_simpl' data\cr in the maptools pacakge . \cr \cr
-\code{schmatzPangea} provides the Gridded climate data from 5 Global Climate Models (GCM) of the Last Glacial Maximum (LGM) downscaled to 30 arc seconds for Europe \url{http://doi.pangaea.de/10.1594/PANGAEA.845883}\cr \cr
-\code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr \cr
-\code{OSMp} is the OSM Point Data from the current OSM database\cr
-\code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol. For Copyright and further information  see: \link{DEM}\cr \cr
-\cr \cr
-
 If  \code{name}='alt' or \code{name}='GADM' you must provide a 'country=' argument. Countries are specified by their 3 letter ISO codes. Use getData('ISO3') to see these codes. In the case of GADM you must also provide the level of administrative subdivision (0=country, 1=first level subdivision). In the case of alt you can set 'mask' to FALSE. If it is TRUE values for neighbouring countries are set to NA. For example:\cr \cr
     \code{getGeoData('GADM', country='FRA', level=1)}\cr
     \code{getGeoData('alt', country='FRA', mask=TRUE)}\cr
 \cr
+\code{SRTM} refers to the hole-filled CGIAR-SRTM (90 m resolution). \cr \cr
 If  \code{name}='SRTM' you must provide 'lon' and 'lat' arguments (longitude and latitude). These should be single numbers somewhere within the SRTM tile that you want.\cr
    \code{getGeoData('SRTM', lon=5, lat=45)}\cr
 \cr
@@ -64,11 +57,14 @@ For example:\cr
 Not all combinations are available. See www.worldclim.org for details.\cr
 \cr
 
+\code{worldclim} is a database of global interpolated climate data. \cr \cr
 If  \code{name}='worldclim' you must also provide a variable name 'var=', and a resolution 'res='. Valid variables names are 'tmin', 'tmax', 'prec' and 'bio'. Valid resolutions are 0.5, 2.5, 5, and 10 (minutes of a degree). In the case of res=0.5, you must also provide a lon and lat argument for a tile; for the lower resolutions global data will be downloaded. In all cases there are 12 (monthly) files for each variable except for 'bio' which contains 19 files.\cr
    \code{getGeoData('worldclim', var='tmin', res=0.5, lon=5, lat=45)} \cr
-   \code{getGeoData('worldclim', var='bio', res=10)}\cr
+   \code{getGeoData('worldclim', var='bio', res=10)}\cr\cr
 
- +++ additional datasets +++
+ +++ additional datasets +++ \cr\cr
+ 
+\code{schmatzPangea} provides the Gridded climate data from 5 Global Climate Models (GCM) of the Last Glacial Maximum (LGM) downscaled to 30 arc seconds for Europe \url{http://doi.pangaea.de/10.1594/PANGAEA.845883}\cr \cr
 If  \code{name}='schmatzPangea' you have to specify the item of interest. Please note: The data download may take a long time!\cr
 The list of allowd items is: \cr
   \itemize{
@@ -139,12 +135,15 @@ The list of allowd items is: \cr
 \code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",var="bio_1")}
 \code{TT<- getGeoData('schmaztLGMData', item='TT_Luterbacher_Xoplaki_1659-1998')}
 
+\code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr \cr
 If  \code{name=}'harrylist' you will download and clean the complete list\cr
-   \code{getGeoData('harrylist')}\cr
-\cr
+   \code{getGeoData('harrylist')}\cr \cr
+   
+\code{OSMp} is the OSM Point Data from the current OSM database\cr\cr
 If  \code{name}='OSMp' you must provide lat_min,lat_max,lon_min,lon_max for the boundig box. Additionally you must set  the switch 'all' to \code{FALSE} if you just want to download a specified item. Then you have to  provide the content of the desired items in the 'key' and 'val' argument. According to this combination you have to provide a tag list containing the Tags of the element c('name','ele').\cr\cr
-   \code{getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='peak',taglist=c('name','ele'))}\cr
-\cr
+   \code{getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='peak',taglist=c('name','ele'))}\cr \cr
+   
+\code{tiroldem} refers to the 10 m Lidar based DEM as provided by the Authorithy of Tirol. For Copyright and further information  see: \link{DEM}\cr \cr    
 If  \code{name}='tiroldem' you must set the switch 'all' to \code{FALSE} if you just want to download a specified item you have to set data=item. 
 The list of allowd items is: 
 \itemize{
