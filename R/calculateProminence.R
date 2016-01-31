@@ -195,7 +195,7 @@ calculateProminence <- function(peaks,x.coord, y.coord, altitude,exact.enough=5,
   
   #- min calculation
   # (gdalUtils) extract info -mm calculates the min max info -approx_stats force
-  file.info<-gdalinfo('run_level.sdat', mm=T, approx_stats=T)
+  file.info<-gdalinfo('run_level.sdat', mm=T)
   
   # (R) get the prominence (min)value
   notch<-as.numeric(substring(file.info[29], regexpr("Min/Max=", file.info[29])+8,regexpr(",", file.info[29])-1))
