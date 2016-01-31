@@ -132,7 +132,7 @@ The list of allowd items is: \cr
 }
 }
 \code{m<-getGeoData('schmatzPangea', item="tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s",startTime=1,endTime=3)}
-\code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",var="bio_1")}
+\code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",data="bio_1")}
 \code{TT<- getGeoData('schmaztLGMData', item='TT_Luterbacher_Xoplaki_1659-1998')}
 
 \code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr 
@@ -167,6 +167,7 @@ For use in ArcGIS the data is correctly georeferenced. However for R you MUST us
       
 \dontrun{
 getGeoData('schmatzPangea', item='tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s',endTime=12)
+getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s", layer="bio_1")
 getGeoData('tiroldem', item='ibk_10m', all=FALSE)
 getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='saddle',taglist=c('name','ele','direction'))
 getGeoData('harrylist')

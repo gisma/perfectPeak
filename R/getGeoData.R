@@ -127,7 +127,7 @@
 #'}
 #'}
 #'\code{m<-getGeoData('schmatzPangea', item="tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s",startTime=1,endTime=3)}
-#'\code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",var="bio_1")}
+#'\code{m<-getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s",data="bio_1")}
 #'\code{TT<- getGeoData('schmaztLGMData', item='TT_Luterbacher_Xoplaki_1659-1998')}
 #'
 #' \code{harrylist} is a list of world wide about 60.000 coordinates altitudes and names of summits \link{PeakList}\cr 
@@ -176,6 +176,7 @@
 #'       
 #' \dontrun{
 #' getGeoData('schmatzPangea', item='tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s',endTime=12)
+#' getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s", layer="bio_1")
 #' getGeoData('tiroldem', item='ibk_10m', all=FALSE)
 #' getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='saddle',taglist=c('name','ele','direction'))
 #' getGeoData('harrylist')
@@ -239,7 +240,7 @@ getGeoData <- function(name='GADM', download=TRUE, path='', ...) {
     if (! file.rename(fn, filename) ) { 
       # rename failed, perhaps because fn and filename refer to different devices
       file.copy(fn, filename)
-      file.remove(fn)
+      #file.remove(fn)
     }
   } else {
     stop('could not download the file' )
@@ -717,21 +718,21 @@ ccodes <- function() {
   return(m.df)
 }
 
-.schmatz <- function(item, startTime=1,endTime=1, var=NULL, path, download=TRUE) {
+.schmatz <- function(item, startTime=1,endTime=1, layer=NULL, path, download=TRUE) {
   validItems<-c('prec_eu_wc_30s', 'tave_eu_wcpi_30s', 'tmax_eu_wcpi_30s',  'tmin_eu_wcpi_30s', 
-           'bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
-           'bioclim_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
-           'bioclim_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 'pr_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
-           'pr_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'pr_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
-           'pr_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'pr_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
-           'tas_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tas_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
-           'tas_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tas_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
-           'tas_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
-           'tasmax_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
-           'tasmax_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
-           'tasmin_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
-           'tasmin_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
-           'tasmin_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'TT_Luterbacher_Xoplaki_1659-1998')
+                'bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+                'bioclim_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 'bioclim_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+                'bioclim_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 'pr_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
+                'pr_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'pr_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
+                'pr_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'pr_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
+                'tas_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tas_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+                'tas_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tas_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+                'tas_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_CCSM_eu_30s', 
+                'tasmax_A_MO_pmip2_21k_oa_CNRM_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_FGOALS_eu_30s', 
+                'tasmax_A_MO_pmip2_21k_oa_IPSL_eu_30s',  'tasmax_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s', 
+                'tasmin_A_MO_pmip2_21k_oa_CCSM_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s', 
+                'tasmin_A_MO_pmip2_21k_oa_FGOALS_eu_30s',  'tasmin_A_MO_pmip2_21k_oa_IPSL_eu_30s', 
+                'tasmin_A_MO_pmip2_21k_oa_MIROC3.2_eu_30s',  'TT_Luterbacher_Xoplaki_1659-1998')
   stopifnot(item %in% validItems)
   
   f <- item
@@ -744,15 +745,19 @@ ccodes <- function() {
     ncfilename <- paste(path,  f, ".nc", sep="")
     ext <- ".nc"
   }
-  if (is.null(var)){
+  
   var<-unlist(strsplit(item,"_"))[1]
+  if (is.null(layer)){
+    dataset<-var
+  } else {
+    dataset<-layer
   }
   if (!file.exists(ncfilename)) {
     if (download) { 
       theurl <- paste("http://hs.pangaea.de/model/schmatz/", f,ext, sep="")
       cat( ncfilename,'  is loading from tape...\n
-     Processing and download  may take a while...\n
-     Further  information: http://doi.pangaea.de/10.1594/PANGAEA.845883?format=html#lcol5.ds12635729')
+           Processing and download  may take a while...\n
+           Further  information: http://doi.pangaea.de/10.1594/PANGAEA.845883?format=html#lcol5.ds12635729')
       test <- try (.download(theurl, ncfilename) , silent=TRUE)
     } else {cat('file not available locally, use download=TRUE\n') }  
   }
@@ -766,29 +771,29 @@ ccodes <- function() {
     
     # create month sequence
     months<-1*(startTime:endTime)
-
+    
     # do parallel
-    foreach(i = 1:length(months),.packages='raster') %dopar% {
-    #for (i in 1:length(months)){
+    #foreach(i = 1:length(months),.packages='raster') %dopar% {
+    for (i in 1:length(months)){
       # create tiffFilename
       tifFilename <- paste(path,  f,"_", i,".tif", sep="")
-      gdal_translate(paste0("NETCDF:",ncfilename,":",var), tifFilename,
-                            b=i,
-                            of="GTiff", 
-                            output_Raster=FALSE, 
-                            verbose=TRUE,
-                            overwrite=TRUE) 
+      gdal_translate(paste0("NETCDF:",ncfilename,":",dataset), tifFilename,
+                     b=i,
+                     of="GTiff", 
+                     output_Raster=FALSE, 
+                     verbose=TRUE,
+                     overwrite=TRUE) 
     }
-
+    
   }	
-
+  
   # create list of tiffiles    
   tiffFiles <- list.files(dirname(ncfilename), pattern = glob2rx(paste0(var,"*.tif")),
                           full.names = TRUE, recursive = TRUE)
-    
+  
   if (length(tiffFiles) > 0) { 
     
-
+    
     cat('creating and georeferencing corresponding rasterstack...')
     rss <- stack(tiffFiles)
     # due to GDAL_NETCDF_BOTTOMUP="NO" we have to flip the raster
@@ -797,7 +802,7 @@ ccodes <- function() {
     extent(rss) <- extentNC #paste0("extent",item)
     projection(rss) <- '+proj=longlat +datum=WGS84 +no_defs'
     return(rss)
-
+    
   } else {
     stop('file not found')
   }
