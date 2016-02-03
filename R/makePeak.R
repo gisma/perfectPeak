@@ -288,29 +288,25 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     
     
     if (ext.peak=='harry') {
-      XHP<-getGeoData(name='harrylist',extent=extent)
+      xPlist<-getGeoData(name='harrylist',extent=extent)
+    } else if (ext.peak=='osm') {
+        xPlist<-getGeoData('OSMp', extent=extent, key='natural',val='peak',taglist=c('name','ele'))
       # remove all not complete rows
-      #XHP<-XHP[complete.cases(XHP),]
+      #XHP<-XHP[complete.cases(XHP@data$Name),]
       # assign lat lon geographic coordinates
-
-            # project to MGI
-      XHP<-spTransform(XHP,CRS(target.proj4))
-      
-      # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,XHP)}
-      # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,XHP,dem,domthres)}
-    }
-    else if (ext.peak=='osm') {
-      XOP<-getGeoData('OSMp', extent=extent, key='natural',val='peak',taglist=c('name','ele'))
-      # call distance based merging of the peaks
-      if(merge==1){df<-distMergePeaks(SP,XOP)}
-      # call cost based merging of the peaks
-      if(merge==2){df<-costMergePeaks(SP,XOP,dem,domthres)}
-    }
-    else {print('not implemented external peak data input')}
-  }
-  else {stop("not implemented yet")}
+    } else {
+      print('not implemented external peak data input')}
+    
+    # project to MGI
+    xPlist<-spTransform(xPlist,CRS(target.proj4))
+    
+    # call distance based merging of the peaks
+    if(merge==1){df<-distMergePeaks(SP,xPlist)}
+    # call cost based merging of the peaks
+    if(merge==2){df<-costMergePeaks(SP,xPlist,dem,domthres)}
+  } # mode3 | 3 
+  else {
+    stop("not implemented yet")}
   
   names(df)<-c('xcoord', 'ycoord', 'altitude', 'name','dominance', 'prominence','independence')
   SP<-df

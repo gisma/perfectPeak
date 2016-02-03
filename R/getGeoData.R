@@ -652,7 +652,7 @@ ccodes <- function() {
     df$Altitude<- altitude
     # making a subset of the for reaonable Lat Lon Values
     df.sub = subset(df, df$Longitude >= extent$xmin & df$Longitude <= extent$xmax & df$Latitude >= extent$ymin & df$Latitude  <= extent$ymax)
-    
+    df.sub[,!(names(df.sub) %in%  c("optional"))]
     coordinates(df.sub)<- ~Longitude+Latitude
     proj4string(df.sub)<- "+proj=longlat +ellps=WGS84"
     
@@ -669,7 +669,7 @@ ccodes <- function() {
   # we also pass the .php extension of the download address
   
   # define the spatial extend of the OSM data we want to retrieve
-  osm.extend <- corner_bbox(extent[1],extent[3],extent[2],extent[4])
+  osm.extend <- corner_bbox(extent$xmin,extent$ymin,extent$xmax,extent$ymax)
   
   # download all osm data inside this area, note we have to declare the api interface with source
   print('Retrieving OSM data. Be patient...')
@@ -702,9 +702,10 @@ ccodes <- function() {
   
   # clean the df and rename the cols
   m.df<-.stmp
+  colnames(m.df)<- c("Latitude","Longitude","Name","Altitude")
   
   # convert the osm.peak df to a SpatialPoints object and assign reference system
-  coordinates(m.df) <- ~lon+lat
+  coordinates(m.df) <- ~Longitude+Latitude
   proj4string(m.df)<-"+proj=longlat +datum=WGS84"
   # save to shapefile
   writePointsShape(m.df,"OSMNode.shp")

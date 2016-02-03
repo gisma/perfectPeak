@@ -29,6 +29,8 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres,plots=TRUE){
   min.dist<-  max(apply(dist,1,min),na.rm=TRUE)+domthres
   # incert the DEM to get a costraster by inverted altitudes
   costraster=(dem*-1)+maxValue(setMinMax(dem))
+  if (plots==TRUE){plot(costraster)}
+  
   # generate a df dor the results
   cost<-data.frame()
   # do peak by peak
@@ -44,12 +46,12 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres,plots=TRUE){
         # caluclate transition raster
         tr=transition(costraster, mean, directions=8)
         # correct it by geometry
-        trC=geoCorrection(tr)
+        tr=geoCorrection(tr)
         # calculate the costpath
-        costpath=shortestPath(trC, start, end,output="SpatialLines")
+        costpath=shortestPath(tr, start@coords, end@coords, output="SpatialLines")
         # because you are bored plot it
         if (plots==TRUE){
-          plot(costraster)
+
           lines(costpath)}
         # get the values of each path
         tmp<-extract(costraster, costpath)
@@ -67,10 +69,10 @@ costMergePeaks<- function(dem.peaklist, ext.peaklist, dem, domthres,plots=TRUE){
   # take the original df 
   ep<-as.data.frame(ext.peaklist)
   dp<-as.data.frame(dem.peaklist)
-  colnames(ep)<-c('xcoord', 'ycoord','name', 'altitude')
+  #colnames(ep)<-c('xcoord', 'ycoord','name', 'altitude')
   # and merge them with using the min cost results
   newdp<-dp[apply(cost,1,which.min),]
-  newdp$name<-ep$df.sub.Name
+  newdp$name<-ep$Name
   
   return(newdp)
 } 
