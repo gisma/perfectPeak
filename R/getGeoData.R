@@ -652,7 +652,7 @@ ccodes <- function() {
     df$Altitude<- altitude
     # making a subset of the for reaonable Lat Lon Values
     df.sub = subset(df, df$Longitude >= extent$xmin & df$Longitude <= extent$xmax & df$Latitude >= extent$ymin & df$Latitude  <= extent$ymax)
-    df.sub[,!(names(df.sub) %in%  c("optional"))]
+    #df.sub[,!(names(df.sub) %in%  c("optional"))]
     coordinates(df.sub)<- ~Longitude+Latitude
     proj4string(df.sub)<- "+proj=longlat +ellps=WGS84"
     
