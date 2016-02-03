@@ -288,14 +288,21 @@ makePeak <- function(fname.DEM,iniparam,myenv,extent,int=TRUE){
     
     
     if (ext.peak=='harry') {
-      XHP<-extractHarry(extent,latlon.proj4,target.proj4)
+      XHP<-getGeoData(name='harrylist',extent=extent)
+      # remove all not complete rows
+      #XHP<-XHP[complete.cases(XHP),]
+      # assign lat lon geographic coordinates
+
+            # project to MGI
+      XHP<-spTransform(XHP,CRS(target.proj4))
+      
       # call distance based merging of the peaks
       if(merge==1){df<-distMergePeaks(SP,XHP)}
       # call cost based merging of the peaks
       if(merge==2){df<-costMergePeaks(SP,XHP,dem,domthres)}
     }
     else if (ext.peak=='osm') {
-      XOP<-extractOSMPoints(extent,iniparam)
+      XOP<-getGeoData('OSMp', extent=extent, key='natural',val='peak',taglist=c('name','ele'))
       # call distance based merging of the peaks
       if(merge==1){df<-distMergePeaks(SP,XOP)}
       # call cost based merging of the peaks

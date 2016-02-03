@@ -21,7 +21,17 @@
 #' @seealso \pkg{perfectPeak} is using heavily SAGA and GRASS GIS via the \code{\link{RSAGA-package}} and 
 #'  \code{\link{rgrass7-package}}.
 #' Please see their documentation for special questions dealing with the algorithms and parameters etc.
-#' @import downloader maptools osmar rgeos gdata Matrix igraph rgdal gdistance  gdalUtils rgrass7 mapview RSAGA sp raster
+#' @importFrom curl curl_download
+#' @importFrom gdistance geoCorrection
+#' @importFrom gdistance transition
+#' @importFrom gdistance shortestPath
+#' 
+#' @import osmar rgeos  
+#' @import igraph 
+#' 
+#' @import rgdal gdalUtils 
+#' @import rgrass7 mapview RSAGA 
+#' @import sp raster
 #'
 NULL
 #' Demo Digital Elevation Model DEM

@@ -36,10 +36,6 @@ script that you may adapt to your needs.
 # as provided in target.proj4  variable in the ini file
 
 
-ini.example=system.file("data","demo.ini", package="perfectPeak")
-dem.example=system.file("data","demo.asc", package="perfectPeak")
-Rpeak(ini.example,dem.example)
-
 
 }
 \author{

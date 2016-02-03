@@ -179,7 +179,7 @@
 #' getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s", layer="bio_1")
 #' getGeoData('tiroldem', item='ibk_10m', all=FALSE)
 #' getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='saddle',taglist=c('name','ele','direction'))
-#' getGeoData('harrylist')
+#' getGeoData('harrylist', extent=c(11.35547,11.40009,47.10114,47.13512))
 #' #
 #' ###
 #' getGeoData('worldclim', var='tmin', res=0.5, lon=5, lat=45)
@@ -617,24 +617,23 @@ ccodes <- function() {
   }
 }
 
-.harrylist <- function(download, path) {
+.harrylist <- function(extent=c(-180,180,-90,90),path,download=TRUE) {
   # use the download.file function to access online content. note we change already the filename and 
   # we also pass the .php extension of the download address
-  zipfilename='bergliste-komplett.kmz'
-  kmlfilename='bergliste-komplett.kml'
-  
-  if (!file.exists(zipfilename)) {
+  zipFn=paste0(path,'bergliste-komplett.kmz')
+  kmlFn=paste0(path,'bergliste-komplett.kml')
+  if (!file.exists(zipFn)) {
     if (download) { 
       theurl <-'http://www.tourenwelt.info/commons/download/bergliste-komplett.kmz.php'
       test <- try (.download(theurl) , silent=TRUE)
     } else {cat('file not available locally, use download=TRUE\n') }  
   }
-  if (file.exists(zipfilename)) { 
-    unzip(zipfilename,junkpath=TRUE, exdir=dirname(zipfilename))
-    file.remove(zipfilename)
+  if (file.exists(zipFn)) { 
+    unzip(zipFn,junkpath=TRUE, exdir=dirname(zipFn))
+    file.remove(zipfn)
   }  
   
-  if (file.exists(kmlfilename)) { 
+  if (file.exists(kmlFn)) { 
     
     # convert to csv file with babel (you need to install the babel binaries on your system)
     system("gpsbabel -i kml -f bergliste-komplett.kml -o unicsv -F bergliste-komplett.csv")
@@ -652,18 +651,14 @@ ccodes <- function() {
     # and put altitude values into df
     df$Altitude<- altitude
     # making a subset of the for reaonable Lat Lon Values
-    df.sub = subset(df, df$Longitude >= -180 & df$Longitude <= 180 & df$Latitude >= -90 & df$Latitude  <= 90)
+    df.sub = subset(df, df$Longitude >= extent$xmin & df$Longitude <= extent$xmax & df$Latitude >= extent$ymin & df$Latitude  <= extent$ymax)
     
-    # first we have to assign lat lon geographic coordinates
-    hblist<-SpatialPointsDataFrame(data.frame(df.sub$Longitude,df.sub$Latitude),data.frame(df.sub$Name,df.sub$Altitude), proj4string = CRS("+proj=longlat +datum=WGS84"))
-    t<-as.data.frame(hblist)
-    colnames(t)<-c('Lat','Lon','Name','Altitude')
-    coordinates(t)<- ~Lat+Lon
-    proj4string(t)<- "+proj=longlat +datum=WGS84"
+    coordinates(df.sub)<- ~Longitude+Latitude
+    proj4string(df.sub)<- "+proj=longlat +ellps=WGS84"
     
-    return(t)
+    return(df.sub)
   } else {
-    stop('file not found')
+    stop("Harry's Peaklist file not found")
   }
 }
 

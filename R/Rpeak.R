@@ -41,10 +41,10 @@
 #' # as provided in target.proj4  variable in the ini file
 #'
 #'
-#' ini.example=system.file("data","demo.ini", package="perfectPeak")
-#' dem.example=system.file("data","demo.asc", package="perfectPeak")
-#' Rpeak(ini.example,dem.example)
-#' 
+# ini.example=system.file("data","demo.ini", package="perfectPeak")
+# dem.example=system.file("data","demo.asc", package="perfectPeak")
+# Rpeak(ini.example,dem.example)
+
 #' 
 
 Rpeak <-function(fname.control,fname.DEM){

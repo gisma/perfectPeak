@@ -170,7 +170,7 @@ getGeoData('schmatzPangea', item='tasmin_A_MO_pmip2_21k_oa_CNRM_eu_30s',endTime=
 getGeoData('schmatzPangea', item="bioclim_A_MO_pmip2_21k_oa_CCSM_eu_30s", layer="bio_1")
 getGeoData('tiroldem', item='ibk_10m', all=FALSE)
 getGeoData('OSMp', extent=c(11.35547,11.40009,47.10114,47.13512), key='natural',val='saddle',taglist=c('name','ele','direction'))
-getGeoData('harrylist')
+getGeoData('harrylist', extent=c(11.35547,11.40009,47.10114,47.13512))
 #
 ###
 getGeoData('worldclim', var='tmin', res=0.5, lon=5, lat=45)
